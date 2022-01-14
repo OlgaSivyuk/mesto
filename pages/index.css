@@ -19,7 +19,7 @@
 
 .header {
   margin: 45px 0 0 ;
-  padding: 0 0 41px;
+  padding: 0 0 37px;  /* должно быть 41px, но тогда нижние блоки едут на 4px*/
   border-bottom: 1px solid #545454; 
 }
 
@@ -31,11 +31,71 @@
 .profile {
   margin: 40px 0 50px;
   display: flex;
-  border: 1px solid red; 
 }
 
 .profile__avatar {
-    width: 120px;
-    height: 100%;
-    padding-right: 30px;
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  object-fit: cover;
+}
+
+.profile__info {
+  padding-left: 30px;
+  padding-top: 21px;
+}
+
+.profile__top-row {
+  display: flex;
+  align-items: baseline;
+}
+
+.profile__name {
+  font-size: 42px;
+  line-height: 48px;
+  font-weight: 500;
+  font-style: normal;
+  padding: 0px;
+  margin: 0;
+}
+
+.button {
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.3s ease;
+}
+/* проверить материал 2го и 3го спринта про работу кнопок при наведении курсора*/
+.button:hover {
+  background: coral;
+  border: coral;
+}
+
+.button__add-info {
+  width: 24px;
+  height: 24px;
+  border-radius: 0%;
+  padding: 0;
+  background: url(../images/edit_button.svg) no-repeat center;
+  border: 1px solid #fff;
+  margin-left: 18px;
+}
+
+.profile__bio {
+  font-size: 18px;
+  line-height: 21.78px;
+  font-weight: 400;
+  font-style: normal;
+  margin: 8px auto 0; /* должно быть 16px, по макету но тогда нижние блоки едут, тк отсчет блока в макете с нижней черты строки без учета висящих букв (у)*/
+}
+
+.button__add-place {
+  width: 150px;
+  height: 50px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 2%;
+  background: url(../images/add_button.svg) no-repeat center;
+  margin-left: auto;
+  margin-right: 0;
+  align-self: center;
 }
