@@ -14,13 +14,13 @@ const editForm = popupEdit.querySelector('.popup__form');
 
 // открываем попап по клику на кнопку с карандашиком (active использую вместо popup_opened из ТЗ)
 function popupOpen(event) {
-  popup.classList.add('active');
+  popup.classList.add('popup_opened');
 }
 openPopupProfile.addEventListener('click', popupOpen);
 
 // закрываем попап по клику на крестик
 function popupClose(event) {
-  popup.classList.remove('active');
+  popup.classList.remove('popup_opened');
 }
 closePopup.addEventListener('click', popupClose);
 
