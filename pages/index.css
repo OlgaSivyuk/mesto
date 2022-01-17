@@ -17,9 +17,11 @@
   color: #fff;
 }
 
+/* должно быть 41px, 
+но тогда нижние блоки едут на 4px*/
 .header {
   margin: 45px 0 0 ;
-  padding: 0 0 37px;  /* должно быть 41px, но тогда нижние блоки едут на 4px*/
+  padding: 0 0 37px;
   border-bottom: 1px solid #545454; 
 }
 
@@ -66,7 +68,7 @@
 }
 /* проверить материал 2го и 3го спринта про работу кнопок при наведении курсора*/
 .button:hover {
-  background: coral;
+  opacity: 0.6;
 }
 
 .button__add_info {
@@ -79,12 +81,16 @@
   margin-left: 18px;
 }
 
+/* должно быть 16px, по макету,
+ но тогда нижние блоки едут, 
+ тк отсчет блока в макете с нижней 
+ черты строки без учета висящих букв (у)*/
 .profile__bio {
   font-size: 18px;
   line-height: 21.78px;
   font-weight: 400;
   font-style: normal;
-  margin: 8px auto 0; /* должно быть 16px, по макету но тогда нижние блоки едут, тк отсчет блока в макете с нижней черты строки без учета висящих букв (у)*/
+  margin: 8px auto 0;
 }
 
 .button__add_place {
@@ -92,8 +98,8 @@
   height: 50px;
   padding: 0;
   border: 2px solid #fff;
-  border-radius: 2%;
-  background: url(../images/add_button.svg) no-repeat center;
+  border-radius: 2px;
+  background-color: #000;
   margin-left: auto;
   margin-right: 0;
   align-self: center;
@@ -112,7 +118,6 @@
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
-  /* изучить эти свойства:*/
 }
 
 .place__image {
@@ -145,7 +150,7 @@
   max-width: 200px;
 }
 
-.button__like{
+.button__like {
   width: 22px;
   height: 19px;
   padding: 0;
@@ -153,7 +158,16 @@
   background: url(../images/like.svg);
 }
 
-.footer__tag{
+/* заготовка для клика по сердечку
+.button__like.active_like {
+  width: 22px;
+  height: 19px;
+  padding: 0;
+  border: none;
+  background: url(../images/heart_black.svg);
+}*/
+
+.footer__tag {
   font-size: 18px;
   line-height: 21.78px;
   font-weight: 400;
@@ -175,7 +189,6 @@
   z-index: 2;
 }
 
-/* задала в js классу popup 'active', решила потестить такое написание в стилях, без указания в html*/
 .popup.active {
   display: flex;
 }
@@ -197,20 +210,24 @@
   z-index: 3;
 }
 
+/* отступ по макету 54px, 
+но не сходтися с пиксель перфект*/
 .popup__title {
   font-size: 24px;
   line-height: 29.05px;
   font-weight: 900;
   font-style: normal;
-  margin: 0 0 48px; /* отступ по макету 54px, но не сходтися с пиксель перфект*/
+  margin: 0 0 48px;
   color: #000;
 }
 
+/* отступ по макету 13px, 
+но не сходтися с пиксель перфект*/
 .popup__input {
   display: block;
   margin: 0 0 30px;
   width: 358px;
-  padding: 0 0 9px; /* отступ по макету 13px, но не сходтися с пиксель перфект*/
+  padding: 0 0 9px;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
 }
@@ -225,6 +242,7 @@
   line-height: 16.94px;
   font-weight: 400;
   font-style: normal;
+  color: #000;
 }
 
 .button__submit {
