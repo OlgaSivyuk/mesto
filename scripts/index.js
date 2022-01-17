@@ -1,5 +1,5 @@
-const openPopupProfile = document.querySelector('.button__add_info');
-const closePopup = document.querySelector('.button__close_popup');
+const openPopupProfile = document.querySelector('.button_add-info');
+const closePopup = document.querySelector('.button_close-popup');
 const popup = document.querySelector('.popup');
 const popupContainer = document.querySelector('.popup__container');
 const popupBody = document.querySelector('.popup__body');
@@ -8,7 +8,7 @@ const userName = document.querySelector('.profile__name');
 const userBio = document.querySelector('.profile__bio'); 
 const profileName = document.getElementById('name');
 const profileBio = document.getElementById('bio');
-const submitProfile = document.querySelector('.button__submit');
+const submitProfile = document.querySelector('.button_submit');
 const buttonSaveCloseProfile = document.querySelector('.button_save-and-close');
 const editForm = popupEdit.querySelector('.popup__form');
 

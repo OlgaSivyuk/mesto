@@ -25,13 +25,13 @@
 
 /* кнопки */
 @import url(../blocks/button/button.css);
-@import url(../blocks/button/__add_info/button__add_info.css);
-@import url(../blocks/button/__add_place/button__add_place.css);
-@import url(../blocks/button/__like/button__like.css);
+@import url(../blocks/button/_add-info/button_add-info.css);
+@import url(../blocks/button/_add-place/button_add-place.css);
+@import url(../blocks/button/_like/button_like.css);
 @import url(../blocks/button/_active-like/button_active-like.css);
-@import url(../blocks/button/__submit/button__submit.css);
-@import url(../blocks/button/__close_popup/button__close_popup.css);
-@import url(../blocks/button/__text/button__text.css);
+@import url(../blocks/button/_submit/button_submit.css);
+@import url(../blocks/button/_close_popup/button_close-popup.css);
+@import url(../blocks/button/_text/button_text.css);
 
 /* попап форма */
 @import url(../blocks/popup/popup.css);
