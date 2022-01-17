@@ -1,0 +1,18 @@
+.button__submit {
+    background-color: #000000;
+    height: 50px;
+    width: 100%;
+    border-radius: 2px;
+    margin: 18px 0 0;
+    padding: 0;
+  }
+  
+  @media screen and (max-width: 539px) {
+    .button__submit {
+      margin: 15px 0 0;
+    }
+  }
+  
+  .button__submit:hover {
+      background: rgba(0, 0, 0, .8);
+    }
