@@ -10,6 +10,7 @@ const profileName = document.getElementById('name');
 const profileBio = document.getElementById('bio');
 const submitProfile = document.querySelector('.button__submit');
 const buttonSaveCloseProfile = document.querySelector('.button_save-and-close');
+const editForm = popupEdit.querySelector('.popup__form');
 
 // открываем попап по клику на кнопку с карандашиком (active использую вместо popup_opened из ТЗ)
 function popupOpen(event) {
@@ -30,7 +31,7 @@ popupContainer.addEventListener('click', function(event) {
   }
 })
 popupBody.addEventListener('click', function(e) {
-  e.preventDefault();
+  e.stopPropagation();
 });
 
 // добавляем переменные имени и деятельности в поля попапа (автозаполнение):
@@ -51,15 +52,15 @@ openPopupProfile.addEventListener('click', filledProfilePopup);
 // 2. сбрасываем стандартное поведение отправки формы при перезагрузке страницы
 // 3. прописываем где должны вставиться значения (новые значения) полей на странице с помощью textContent
 function changedProfilePopup(event) {
-  event.defaultPrevented();
+  event.preventDefault();
   userName.textContent = profileName.value;
   userBio.textContent = profileBio.value;
   popupClose(popupEdit);
 }
 //запускаем слушателя функции изменения данных в профиле
-submitProfile.addEventListener('submit', changedProfilePopup);
-//закрываем по клику на кнопку "сохранить", запускаем слушателя функции закрытия попапа
+editForm.addEventListener('submit', changedProfilePopup);
 
+//закрываем по клику на кнопку "сохранить", запускаем слушателя функции закрытия попапа
 buttonSaveCloseProfile.addEventListener('click',function() {
   popupClose(popupEdit)
 });
