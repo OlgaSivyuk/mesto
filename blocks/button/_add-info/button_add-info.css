@@ -1,4 +1,4 @@
-.button__add_info {
+.button_add-info {
     width: 24px;
     height: 24px;
     border-radius: 0%;
@@ -9,7 +9,7 @@
   }
   
   @media screen and (max-width: 539px) {
-    .button__add_info {
+    .button_add-info {
       width: 18px;
       height: 18px;
       margin-left: 10px;
