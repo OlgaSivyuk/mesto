@@ -1,0 +1,46 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts/fonts.css);
+
+/* ШАПКА */
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
+
+/* блок профиль */
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__info/profile__info.css);
+@import url(../blocks/profile/__top-row/profile__top-row.css);
+@import url(../blocks/profile/__name/profile__name.css);
+@import url(../blocks/profile/__bio/profile__bio.css);
+
+/* блок с карточками мест */
+@import url(../blocks/places/places.css);
+@import url(../blocks/place/place.css);
+@import url(../blocks/place/__image/place__image.css);
+@import url(../blocks/place/__info/place__info.css);
+@import url(../blocks/place/__name/place__name.css);
+
+/* футтер */
+@import url(../blocks/footer/__tag/footer__tag.css);
+
+/* кнопки */
+@import url(../blocks/button/button.css);
+@import url(../blocks/button/_add-info/button_add-info.css);
+@import url(../blocks/button/_add-place/button_add-place.css);
+@import url(../blocks/button/_like/button_like.css);
+@import url(../blocks/button/_active-like/button_active-like.css);
+@import url(../blocks/button/_submit/button_submit.css);
+@import url(../blocks/button/_close_popup/button_close-popup.css);
+@import url(../blocks/button/_text/button_text.css);
+
+/* попап форма */
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__body/popup__body.css);
+@import url(../blocks/popup/__title/popup__title.css);
+@import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/popup/__input/_text/popup__input_text.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+
+/* стили и размеры страницы */
+@import url(../blocks/page/page.css);
