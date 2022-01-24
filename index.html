@@ -18,76 +18,71 @@
       <div class="profile__info">
         <div class="profile__top-row">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button type="button" id="open_popup" class="button button_add-info"></button>
+          <button type="button" id="open_popup" class="profile__add-info" aria-label="Редактировать профиль"></button>
         </div>
         <p class="profile__bio">Исследователь океана</p>
       </div>
-      <button type="button" class="button button_add-place">
-        <img src="./images/add_button.svg" alt="Добавить" class="button__add-icon" />
-      </button>
+      <button type="button" class="profile__add-place" aria-label="Добавить фото"></button>
     </section>
 
-    <div class="places">
+    <section class="places">
       <article class="place">
         <img alt="Вид на Спас" class="place__image" src="./images/piter.jpeg"/>
         <div class="place__info">
           <h2 class="place__name">Санкт-Петербург</h2>
-          <button type="button" class="button button_like"></button>
+          <button type="button" class="place__like" aria-label="Нравится"></button>
         </div>
       </article>
       <article class="place">
         <img alt="Турики в горах" class="place__image" src="./images/arkhyz.jpg"/>
         <div class="place__info">
           <h2 class="place__name">Сочи</h2>
-          <button type="button" class="button button_like"></button>
+          <button type="button" class="place__like" aria-label="Нравится"></button>
         </div>
       </article>
       <article class="place">
         <img alt="Корабль в северном сиянии" class="place__image" src="./images/kolsky.jpg"/>
         <div class="place__info">
           <h2 class="place__name">Кольский</h2>
-          <button type="button" class="button button_like"></button>
+          <button type="button" class="place__like" aria-label="Нравится"></button>
         </div>
       </article>
       <article class="place">
         <img alt="Алтай, весна" class="place__image" src="./images/altay.jpg"/>
         <div class="place__info">
           <h2 class="place__name">Алтай</h2>
-          <button type="button" class="button button_like"></button>
+          <button type="button" class="place__like" aria-label="Нравится"></button>
         </div>
       </article>
       <article class="place">
         <img alt="Лиса на фоне домашнего вулкана" class="place__image" src="./images/kamchatka.jpg"/>
         <div class="place__info">
           <h2 class="place__name">Камчатка</h2>
-          <button type="button" class="button button_like"></button>
+          <button type="button" class="place__like" aria-label="Нравится"></button>
         </div>
       </article>
       <article class="place">
         <img alt="Осень в Карачаево-Черкесии" class="place__image" src="./images/cherkesiya.jpg"/>
         <div class="place__info">
           <h2 class="place__name">Карачаево-Черкесия</h2>
-          <button type="button" class="button button_like"></button>
+          <button type="button" class="place__like" aria-label="Нравится"></button>
         </div>
       </article>
-    
-    </div>
+    </section>
   </main>
   <footer class="footer">
     <p class="footer__tag">&copy; Оля Сивьюк. 2022 Mesto Russia</p>
   </footer>
 
-  <div class="popup popup_edit">
-    <div class="popup__container">
-      <div class="popup__body">
-          <h3 class="popup__title">Редактировать профиль</h3>
-          <form id="form" class="popup__form" autocomplete="off">
-            <input type="text" id="name" name="name" class="popup__input popup__input_text" placeholder="Имя">
-            <input type="text" id="bio" name="bio" class="popup__input popup__input_text" placeholder="О себе">
-            <button type="submit" class="button button_submit button_text button_save-and-close">Сохранить</button>
-          </form>
-          <button type="button" id="close_popup" class="button button_close-popup"></button>
-      </div>
+  <div class="popup">
+    <div class="popup__body">
+      <h3 class="popup__title">Редактировать профиль</h3>
+      <form id="form" class="popup__form" name="edit-form" autocomplete="off">
+        <input type="text" id="name" name="name" class="popup__input" placeholder="Имя">
+        <input type="text" id="bio" name="bio" class="popup__input" placeholder="О себе">
+        <button type="submit" class="popup__submit">Сохранить</button>
+      </form>
+      <button type="button" id="close_popup" class="popup__close-popup" aria-label="Закрыть редактирование профиля"></button>
     </div>
   </div>
 <script src="scripts/index.js"></script>

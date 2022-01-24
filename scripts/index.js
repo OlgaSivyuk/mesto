@@ -1,38 +1,23 @@
-const openPopupProfile = document.querySelector('.button_add-info');
-const closePopup = document.querySelector('.button_close-popup');
+const openPopupProfile = document.querySelector('.profile__add-info');
+const closePopup = document.querySelector('.popup__close-popup');
 const popup = document.querySelector('.popup');
-const popupContainer = document.querySelector('.popup__container');
 const popupBody = document.querySelector('.popup__body');
-const popupEdit = document.querySelector('.popup_edit');
 const userName = document.querySelector('.profile__name'); 
 const userBio = document.querySelector('.profile__bio'); 
 const profileName = document.getElementById('name');
 const profileBio = document.getElementById('bio');
-const submitProfile = document.querySelector('.button_submit');
-const buttonSaveCloseProfile = document.querySelector('.button_save-and-close');
-const editForm = popupEdit.querySelector('.popup__form');
+const submitProfile = document.querySelector('.popup__submit');
+const editForm = popup.querySelector('.popup__form');
 
-// открываем попап по клику на кнопку с карандашиком (active использую вместо popup_opened из ТЗ)
+// функция открытия попапа по клику на кнопку с карандашиком
 function popupOpen(event) {
   popup.classList.add('popup_opened');
 }
-openPopupProfile.addEventListener('click', popupOpen);
 
-// закрываем попап по клику на крестик
+// функция закрытия попапа по клику на крестик
 function popupClose(event) {
   popup.classList.remove('popup_opened');
 }
-closePopup.addEventListener('click', popupClose);
-
-//закрываем попап по клику на подложку попапа (условие работает при сбросе стандартного поведения)
-popupContainer.addEventListener('click', function(event) {
-  if(!event.defaultPrevented) {
-    popupClose();
-  }
-})
-popupBody.addEventListener('click', function(e) {
-  e.stopPropagation();
-});
 
 // добавляем переменные имени и деятельности в поля попапа (автозаполнение):
 // 1. создаем функцию filledPopupProf
@@ -40,12 +25,10 @@ popupBody.addEventListener('click', function(e) {
 // 3. для свойства value получили ключи полей profileName и profileBio
 // 4. подставили в поля значения имеющихся переменных userName и userBio
 function filledProfilePopup() {
-  popupOpen(popupEdit);
+  popupOpen(popup);
   profileName.value = userName.textContent;
   profileBio.value = userBio.textContent;
 };
-// запускаем слушателя функции подстановки переменных
-openPopupProfile.addEventListener('click', filledProfilePopup);
 
 //записываем новые значения полей профиля при нажатии на кнопку "сохранить" и закрываем попап (обработчик отправки формы)
 // 1. создаем функцию 
@@ -55,12 +38,22 @@ function changedProfilePopup(event) {
   event.preventDefault();
   userName.textContent = profileName.value;
   userBio.textContent = profileBio.value;
-  popupClose(popupEdit);
+  popupClose(popup);
 }
-//запускаем слушателя функции изменения данных в профиле
-editForm.addEventListener('submit', changedProfilePopup);
 
-//закрываем по клику на кнопку "сохранить", запускаем слушателя функции закрытия попапа
-buttonSaveCloseProfile.addEventListener('click',function() {
-  popupClose(popupEdit)
-});
+openPopupProfile.addEventListener('click', popupOpen); // запускаем слушателя для открытия попапа
+closePopup.addEventListener('click', popupClose); // если я убираю слушателя события,  то при клике на крестик, попап не закрывается
+openPopupProfile.addEventListener('click', filledProfilePopup); // запускаем слушателя функции подстановки переменных
+editForm.addEventListener('submit', changedProfilePopup); //запускаем слушателя функции изменения данных в профиле
+
+
+//закрываем попап по клику на подложку попапа (условие работает при сбросе стандартного поведения)
+//найти ошибку и пересмотреть код, пока не пойму что не так (закрывается если выделить текст и выйти за рамки попапа)
+//popup.addEventListener('click', function(event) {
+//    if(!event.defaultPrevented) {
+//      popupClose();
+//    }
+//  })
+//  popupBody.addEventListener('click', function(e) {
+//      e.preventDefault();
+//    });

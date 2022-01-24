@@ -7,16 +7,19 @@
     line-height: 21.78px;
     font-weight: 400;
     font-style: normal;
-    margin: 8px auto 0;
+    margin: 8px 0 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 350px;
   }
   
   @media screen and (max-width: 539px) {
     .profile__bio {
       font-size: 14px;
       line-height: 16.94px;
-      font-weight: 400;
-      font-style: normal;
-      padding: 0px 28px 0 0;
+      padding: 0 28px 0 0;
       margin: 6px auto 0;
+      max-width: 200px;
     }
   }
