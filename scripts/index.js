@@ -41,11 +41,11 @@ function changedProfilePopup(event) {
   popupClose(popup);
 }
 
-openPopupProfile.addEventListener('click', popupOpen); // запускаем слушателя для открытия попапа
-closePopup.addEventListener('click', popupClose); // если я убираю слушателя события,  то при клике на крестик, попап не закрывается
+closePopup.addEventListener('click', popupClose); // запускаем слушателя для закрытия попапа при клике на крестик
 openPopupProfile.addEventListener('click', filledProfilePopup); // запускаем слушателя функции подстановки переменных
 editForm.addEventListener('submit', changedProfilePopup); //запускаем слушателя функции изменения данных в профиле
 
+//openPopupProfile.addEventListener('click', popupOpen); запускаем слушателя для открытия попапа - открытие уже работает в функции filledProfilePopup
 
 //закрываем попап по клику на подложку попапа (условие работает при сбросе стандартного поведения)
 //найти ошибку и пересмотреть код, пока не пойму что не так (закрывается если выделить текст и выйти за рамки попапа)
