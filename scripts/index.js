@@ -7,7 +7,6 @@ const profileName = document.getElementById('name');
 const profileBio = document.getElementById('bio');
 const closeProfilePopup = popupTypeProfile.querySelector('.popup__close-popup'); 
 const editProfilePopupForm = popupTypeProfile.querySelector('.popup__form');
-//const submitButtonProfile = document.querySelector('.popup__submit'); //еще не использовался
 
 //КАРТОЧКА МЕСТА объявляем переменные
 const profileAddPlace = document.querySelector('.profile__add-place');
@@ -19,14 +18,12 @@ const editCardPopupForm = popupTypePlace.querySelector('.popup__form');
 const submitButtonPlace = popupTypePlace.querySelector('.popup__submit');
 const places = document.querySelector('.places');
 
-
 //ФОТО
 const placeImage = document.querySelector('.place__image');
 const popupTypePhoto = document.querySelector('.popup_type_photo');
 const PhotoUrl = document.querySelector('.popup__photo-url');
 const PhotoName = document.querySelector('.popup__photo-name');
 const closePhotoPopup = popupTypePhoto.querySelector('.popup__close-popup');
-
 
 // Отображаем карточки из готового массива
 const initialCards = [
@@ -68,8 +65,6 @@ const renderCard = (item) => {
   
   actionWithCard(cardElement, item);
   
-  
-
   places.prepend(cardElement); // содержание склонированного template добавляется в cardElement(.place)
   return cardElement;
 };
@@ -79,7 +74,7 @@ function render() {
 };
 render();
 
-//СОЗДАНИЕ НОВОЙ КАРТОЧКИ с местом // КАК сделать так,  чтобы карточка размещалась в начале спискка (prepend)
+//СОЗДАНИЕ НОВОЙ КАРТОЧКИ с местом
 function filledPlacePopup (evt) {
   evt.preventDefault();
   places.prepend(
@@ -90,15 +85,11 @@ function filledPlacePopup (evt) {
   popupClose(popupTypePlace);
 };
 
-editCardPopupForm.addEventListener('submit', filledPlacePopup)// запускаем слушателя новой заполненной карточки места
-
-
-// ФУНКЦИЯ СЛУШАТЕЛЯ реакций для карточки (удаление,  лайки, открытие фото)
+// КАРТОЧКИ места функция слушателя реакций (удаление,  лайки, открытие фото)
 function actionWithCard(element, item) {
   element.querySelector('.place__delete').addEventListener('click', deleteCard);
   element.querySelector('.place__like').addEventListener('click', likeCard);
   element.querySelector('.place__image').addEventListener('click', () => photoOpen(item));
-  //element.querySelector('.place__image').addEventListener('click', () => photoClose);
 };
 
 function deleteCard(evt) {
@@ -109,17 +100,15 @@ function likeCard(evt) {
   evt.target.classList.toggle('place__like_active');
 };
 
+// ФОТО функция открытия попапа при клике на элемент
 function photoOpen(item) {
   popupTypePhoto.classList.add('popup_opened');
   PhotoUrl.src = item.link;
   PhotoUrl.alt = item.name;
   PhotoName.textContent = item.name;
-  //console.log(popupTypePhoto);
 };
 
-
-
-// ПРОФИЛЬ запускаем функции
+// ПРОФИЛЬ
 // добавляем переменные имени и деятельности в поля попапа (автозаполнение):
 function filledProfilePopup() {
   popupOpen(popupTypeProfile);
@@ -145,7 +134,7 @@ function popupClose(evt) {
   evt.classList.remove('popup_opened');
 }
 
-
+// ПРОФИЛЬ запускаем функции
 closeProfilePopup.addEventListener('click', () => popupClose(popupTypeProfile)); //запускаем слушателя функция закрытия попапа по клику на крестик
 profileEditInfo.addEventListener('click', filledProfilePopup); // запускаем слушателя функции подстановки переменных
 editProfilePopupForm.addEventListener('submit', changedProfilePopup); //запускаем слушателя функции изменения данных в профиле
@@ -153,5 +142,7 @@ editProfilePopupForm.addEventListener('submit', changedProfilePopup); //запу
 //КАРТОЧКА МЕСТА запускаем функции
 profileAddPlace.addEventListener('click', () => popupOpen(popupTypePlace)); // запускаем слушателя запуска функция открытия попапа по клику на кнопку с плюсом
 closeCardPopup.addEventListener('click', () => popupClose(popupTypePlace)); // запускаем слушателя функция закрытия попапа по клику на крестик
+editCardPopupForm.addEventListener('submit', filledPlacePopup)// запускаем слушателя новой заполненной карточки места
 
-closePhotoPopup.addEventListener('click', () => popupClose(popupTypePhoto));
+//ФОТО запускаем функции
+closePhotoPopup.addEventListener('click', () => popupClose(popupTypePhoto));// запускаем слушателя функции закрытия попапа по клику на крестик
