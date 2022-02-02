@@ -9,7 +9,7 @@
     margin: 0;
     border: none;
     cursor: pointer;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.2s ease;
   }
   
   @media screen and (max-width: 539px) {
