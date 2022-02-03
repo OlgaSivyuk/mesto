@@ -1,29 +1,29 @@
 //ПРОФИЛЬ объявляем переменные
-const profileEditInfo = document.querySelector('.profile__add-info'); 
+const profileInfoButton = document.querySelector('.profile__add-info'); 
 const userName = document.querySelector('.profile__name'); 
 const userBio = document.querySelector('.profile__bio'); 
 const popupTypeProfile = document.querySelector('.popup_type_profile');
 const profileName = document.getElementById('name');
 const profileBio = document.getElementById('bio');
-const closeProfilePopup = popupTypeProfile.querySelector('.popup__close-popup'); 
-const editProfilePopupForm = popupTypeProfile.querySelector('.popup__form');
+const profilePopupClosingButton = popupTypeProfile.querySelector('.popup__close-popup'); 
+const profilePopupForm = popupTypeProfile.querySelector('.popup__form');
 
 //КАРТОЧКА МЕСТА объявляем переменные
-const profileAddPlace = document.querySelector('.profile__add-place');
+const profilePlaceButton = document.querySelector('.profile__add-place');
 const popupTypePlace = document.querySelector('.popup_type_place');
 const placeName = document.getElementById('place-name');
 const placeLink = document.getElementById('place-link');
-const closeCardPopup = popupTypePlace.querySelector('.popup__close-popup'); 
-const editCardPopupForm = popupTypePlace.querySelector('.popup__form');
-const submitButtonPlace = popupTypePlace.querySelector('.popup__submit');
-const places = document.querySelector('.places');
+const cardPopupClosingButton = popupTypePlace.querySelector('.popup__close-popup'); 
+const cardPopupForm = popupTypePlace.querySelector('.popup__form');
+const placeSubmitButton = popupTypePlace.querySelector('.popup__submit');
+const placesSection = document.querySelector('.places');
 
 //ФОТО
 const placeImage = document.querySelector('.place__image');
 const popupTypePhoto = document.querySelector('.popup_type_photo');
 const PhotoUrl = document.querySelector('.popup__photo-url');
 const PhotoName = document.querySelector('.popup__photo-name');
-const closePhotoPopup = popupTypePhoto.querySelector('.popup__close-popup');
+const photoPopupClosingButton = popupTypePhoto.querySelector('.popup__close-popup');
 
 // Отображаем карточки из готового массива
 const initialCards = [
@@ -56,40 +56,47 @@ const initialCards = [
 //ТЕМПЛЕЙТ
 const cardTemplate = document.querySelector('.template').content; // взяли контент из блока template и положили в новую карточку cardElement
 
-const renderCard = (item) => {
+const cardRender = (item) => {
   const cardElement = cardTemplate.cloneNode(true);
   
   cardElement.querySelector('.place__name').textContent = item.name;
   cardElement.querySelector('.place__image').src = item.link;
   cardElement.querySelector('.place__image').alt = item.name;
   
-  actionWithCard(cardElement, item);
+  interactWithCard(cardElement, item);
   
-  places.prepend(cardElement); // содержание склонированного template добавляется в cardElement(.place)
+  placesSection.prepend(cardElement); // содержание склонированного template добавляется в cardElement(.place)
   return cardElement;
 };
 
 function render() {
-  initialCards.forEach(renderCard);
+  initialCards.forEach(cardRender);
 };
 render();
 
+//Евгений,  просьба немного раскрыть комментарий 
+//"Функция создания карточки не должна заниматься вставкой в разметку",  
+//если убранных значений имени и ссылки не достаточно
+//и к сожалению, не видела твои первые комментарии,  видимо вносила правки параллельно 
+//и не ожидала такого скорого ответа. Если они отличались от текущих, можно их продублировать? 
+//Заранее благодарю)
+
 //СОЗДАНИЕ НОВОЙ КАРТОЧКИ с местом
-function filledPlacePopup (evt) {
+function fillPlacePopup(evt) {
   evt.preventDefault();
-  places.prepend(
-    renderCard({ name: placeName.value, link: placeLink.value})
+  placesSection.prepend(
+    cardRender({ name: placeName.value, link: placeLink.value})
   );
-  placeName.value = '';
-  placeLink.value = '';
-  popupClose(popupTypePlace);
+  //placeName.value = '';
+  //placeLink.value = '';
+  closePopup(popupTypePlace);
 };
 
 // КАРТОЧКИ места функция слушателя реакций (удаление,  лайки, открытие фото)
-function actionWithCard(element, item) {
+function interactWithCard(element, item) {
   element.querySelector('.place__delete').addEventListener('click', deleteCard);
   element.querySelector('.place__like').addEventListener('click', likeCard);
-  element.querySelector('.place__image').addEventListener('click', () => photoOpen(item));
+  element.querySelector('.place__image').addEventListener('click', () => openPhoto(item));
 };
 
 function deleteCard(evt) {
@@ -101,8 +108,8 @@ function likeCard(evt) {
 };
 
 // ФОТО функция открытия попапа при клике на элемент
-function photoOpen(item) {
-  popupTypePhoto.classList.add('popup_opened');
+function openPhoto(item) {
+  openPopup(popupTypePhoto);
   PhotoUrl.src = item.link;
   PhotoUrl.alt = item.name;
   PhotoName.textContent = item.name;
@@ -110,39 +117,39 @@ function photoOpen(item) {
 
 // ПРОФИЛЬ
 // добавляем переменные имени и деятельности в поля попапа (автозаполнение):
-function filledProfilePopup() {
-  popupOpen(popupTypeProfile);
+function fillProfilePopup() {
+  openPopup(popupTypeProfile);
   profileName.value = userName.textContent;
   profileBio.value = userBio.textContent;
 };
 
 //записываем новые значения полей профиля при нажатии на кнопку "сохранить" и закрываем попап (обработчик отправки формы)
-function changedProfilePopup(event) {
+function changProfilePopup(event) {
   event.preventDefault();
   userName.textContent = profileName.value;
   userBio.textContent = profileBio.value;
-  popupClose(popupTypeProfile);
+  closePopup(popupTypeProfile);
 }
 
 // ОБЩИЕ функции для попапов:
 // функция открытия попапа по клику на кнопку с карандашиком
-function popupOpen(evt) {
+function openPopup(evt) {
   evt.classList.add('popup_opened');
 }
 //функция закрытия попапа по клику на крестик
-function popupClose(evt) {
+function closePopup(evt) {
   evt.classList.remove('popup_opened');
 }
 
 // ПРОФИЛЬ запускаем функции
-closeProfilePopup.addEventListener('click', () => popupClose(popupTypeProfile)); //запускаем слушателя функция закрытия попапа по клику на крестик
-profileEditInfo.addEventListener('click', filledProfilePopup); // запускаем слушателя функции подстановки переменных
-editProfilePopupForm.addEventListener('submit', changedProfilePopup); //запускаем слушателя функции изменения данных в профиле
+profilePopupClosingButton.addEventListener('click', () => closePopup(popupTypeProfile)); //запускаем слушателя функция закрытия попапа по клику на крестик
+profileInfoButton.addEventListener('click', fillProfilePopup); // запускаем слушателя функции подстановки переменных
+profilePopupForm.addEventListener('submit', changProfilePopup); //запускаем слушателя функции изменения данных в профиле
 
 //КАРТОЧКА МЕСТА запускаем функции
-profileAddPlace.addEventListener('click', () => popupOpen(popupTypePlace)); // запускаем слушателя запуска функция открытия попапа по клику на кнопку с плюсом
-closeCardPopup.addEventListener('click', () => popupClose(popupTypePlace)); // запускаем слушателя функция закрытия попапа по клику на крестик
-editCardPopupForm.addEventListener('submit', filledPlacePopup)// запускаем слушателя новой заполненной карточки места
+profilePlaceButton.addEventListener('click', () => openPopup(popupTypePlace)); // запускаем слушателя запуска функция открытия попапа по клику на кнопку с плюсом
+cardPopupClosingButton.addEventListener('click', () => closePopup(popupTypePlace)); // запускаем слушателя функция закрытия попапа по клику на крестик
+cardPopupForm.addEventListener('submit', fillPlacePopup)// запускаем слушателя новой заполненной карточки места
 
 //ФОТО запускаем функции
-closePhotoPopup.addEventListener('click', () => popupClose(popupTypePhoto));// запускаем слушателя функции закрытия попапа по клику на крестик
+photoPopupClosingButton.addEventListener('click', () => closePopup(popupTypePhoto));// запускаем слушателя функции закрытия попапа по клику на крестик
