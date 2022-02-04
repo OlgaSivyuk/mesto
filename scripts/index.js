@@ -21,8 +21,8 @@ const placesSection = document.querySelector('.places');
 //ФОТО
 const placeImage = document.querySelector('.place__image');
 const popupTypePhoto = document.querySelector('.popup_type_photo');
-const PhotoUrl = document.querySelector('.popup__photo-url');
-const PhotoName = document.querySelector('.popup__photo-name');
+const photoUrl = document.querySelector('.popup__photo-url');
+const photoName = document.querySelector('.popup__photo-name');
 const photoPopupClosingButton = popupTypePhoto.querySelector('.popup__close-popup');
 
 // Отображаем карточки из готового массива
@@ -56,35 +56,39 @@ const initialCards = [
 //ТЕМПЛЕЙТ
 const cardTemplate = document.querySelector('.template').content; // взяли контент из блока template и положили в новую карточку cardElement
 
-const cardRender = (item) => {
+const cardCreate = (item) => {
   const cardElement = cardTemplate.cloneNode(true);
   
   cardElement.querySelector('.place__name').textContent = item.name;
   cardElement.querySelector('.place__image').src = item.link;
   cardElement.querySelector('.place__image').alt = item.name;
   
-  interactWithCard(cardElement, item);
+  setEventListeners(cardElement, item); // добавляем подписку на событие реакций
   
-  placesSection.prepend(cardElement); // содержание склонированного template добавляется в cardElement(.place)
-  return cardElement;
+  //placesSection.prepend(cardElement); // содержание склонированного template добавляется в cardElement(.place)
+  return cardElement; // карточка вернулась без добавления в DOM
 };
 
-function render() {
-  initialCards.forEach(cardRender);
+function renderCard(item) {
+  const newCard = cardCreate(item);
+  placesSection.prepend(newCard);
 };
+
+//function render() {
+//  initialCards.forEach(cardCreate);
+//};
+
+function render(){
+  initialCards.forEach(renderCard);
+};
+
 render();
-
-//Евгений,  просьба немного раскрыть комментарий 
-//"Функция создания карточки не должна заниматься вставкой в разметку", 
-//и к сожалению, не видела твои первые комментарии,  видимо вносила правки параллельно 
-//и не ожидала такого скорого ответа. Если они отличались от текущих, можно их продублировать? 
-//Заранее благодарю)
 
 //СОЗДАНИЕ НОВОЙ КАРТОЧКИ с местом
 function fillPlacePopup(evt) {
   evt.preventDefault();
   placesSection.prepend(
-    cardRender({ name: placeName.value, link: placeLink.value})
+    cardCreate({ name: placeName.value, link: placeLink.value})
   );
   placeName.value = '';
   placeLink.value = '';
@@ -92,7 +96,7 @@ function fillPlacePopup(evt) {
 };
 
 // КАРТОЧКИ места функция слушателя реакций (удаление,  лайки, открытие фото)
-function interactWithCard(element, item) {
+function setEventListeners(element, item) {
   element.querySelector('.place__delete').addEventListener('click', deleteCard);
   element.querySelector('.place__like').addEventListener('click', likeCard);
   element.querySelector('.place__image').addEventListener('click', () => openPhoto(item));
@@ -109,9 +113,9 @@ function likeCard(evt) {
 // ФОТО функция открытия попапа при клике на элемент
 function openPhoto(item) {
   openPopup(popupTypePhoto);
-  PhotoUrl.src = item.link;
-  PhotoUrl.alt = item.name;
-  PhotoName.textContent = item.name;
+  photoUrl.src = item.link;
+  photoUrl.alt = item.name;
+  photoName.textContent = item.name;
 };
 
 // ПРОФИЛЬ
@@ -132,12 +136,12 @@ function changProfilePopup(event) {
 
 // ОБЩИЕ функции для попапов:
 // функция открытия попапа по клику на кнопку с карандашиком
-function openPopup(evt) {
-  evt.classList.add('popup_opened');
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
 }
 //функция закрытия попапа по клику на крестик
-function closePopup(evt) {
-  evt.classList.remove('popup_opened');
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 
 // ПРОФИЛЬ запускаем функции
