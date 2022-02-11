@@ -38,7 +38,9 @@
       <h3 class="popup__title">Редактировать профиль</h3>
       <form class="popup__form" name="edit-profile-form" autocomplete="off">
         <input type="text" id="name" name="name" class="popup__input" placeholder="Имя">
+        <span class="popup__error"></span>
         <input type="text" id="bio" name="bio" class="popup__input" placeholder="О себе">
+        <span class="popup__error"></span>>
         <button type="submit" class="popup__submit">Сохранить</button>
       </form>
       <button type="button" class="popup__close-popup" aria-label="Закрыть редактирование профиля"></button>
@@ -50,7 +52,9 @@
       <h3 class="popup__title">Новое место</h3>
       <form class="popup__form" name="edit-place-form" autocomplete="off">
         <input type="text" id="place-name" name="place-name" class="popup__input popup__input_place-name" placeholder="Название">
+        <span class="popup__error"></span>
         <input type="text" id="place-link" name="place-link" class="popup__input popup__input_place_link" placeholder="Ссылка на картинку">
+        <span class="popup__error"></span>
         <button type="submit" class="popup__submit">Создать</button>
       </form>
       <button type="button" class="popup__close-popup" aria-label="Закрыть редактирование карточки место"></button>

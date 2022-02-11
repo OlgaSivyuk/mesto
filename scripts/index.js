@@ -54,7 +54,8 @@ const initialCards = [
 ];
 
 //ТЕМПЛЕЙТ
-const cardTemplate = document.querySelector('.template').content; // взяли контент из блока template и положили в новую карточку cardElement
+// взяли контент из блока template и положили в новую карточку cardElement
+const cardTemplate = document.querySelector('.template').content; 
 
 const cardCreate = (item) => {
   const cardElement = cardTemplate.cloneNode(true);
@@ -65,8 +66,11 @@ const cardCreate = (item) => {
   
   setEventListeners(cardElement, item); // добавляем подписку на событие реакций
   
-  //placesSection.prepend(cardElement); // содержание склонированного template добавляется в cardElement(.place)
-  return cardElement; // карточка вернулась без добавления в DOM
+  // содержание склонированного template добавляется в cardElement(.place)
+  //placesSection.prepend(cardElement);
+
+  // карточка вернулась без добавления в DOM
+  return cardElement; 
 };
 
 function renderCard(item) {
@@ -126,7 +130,8 @@ function fillProfilePopup() {
   profileBio.value = userBio.textContent;
 };
 
-//записываем новые значения полей профиля при нажатии на кнопку "сохранить" и закрываем попап (обработчик отправки формы)
+//записываем новые значения полей профиля при нажатии 
+//на кнопку "сохранить" и закрываем попап (обработчик отправки формы)
 function changProfilePopup(event) {
   event.preventDefault();
   userName.textContent = profileName.value;
@@ -145,14 +150,36 @@ function closePopup(popup) {
 }
 
 // ПРОФИЛЬ запускаем функции
-profilePopupClosingButton.addEventListener('click', () => closePopup(popupTypeProfile)); //запускаем слушателя функция закрытия попапа по клику на крестик
-profileInfoButton.addEventListener('click', fillProfilePopup); // запускаем слушателя функции подстановки переменных
-profilePopupForm.addEventListener('submit', changProfilePopup); //запускаем слушателя функции изменения данных в профиле
+//запускаем слушателя функция закрытия попапа по клику на крестик
+profilePopupClosingButton.addEventListener('click', () => closePopup(popupTypeProfile));
+// запускаем слушателя функции подстановки переменных
+profileInfoButton.addEventListener('click', fillProfilePopup);
+//запускаем слушателя функции изменения данных в профиле
+profilePopupForm.addEventListener('submit', changProfilePopup);
 
 //КАРТОЧКА МЕСТА запускаем функции
-profilePlaceButton.addEventListener('click', () => openPopup(popupTypePlace)); // запускаем слушателя запуска функция открытия попапа по клику на кнопку с плюсом
-cardPopupClosingButton.addEventListener('click', () => closePopup(popupTypePlace)); // запускаем слушателя функция закрытия попапа по клику на крестик
-cardPopupForm.addEventListener('submit', fillPlacePopup)// запускаем слушателя новой заполненной карточки места
+// запускаем слушателя запуска функция открытия попапа по клику на кнопку с плюсом
+profilePlaceButton.addEventListener('click', () => openPopup(popupTypePlace));
+// запускаем слушателя функция закрытия попапа по клику на крестик
+cardPopupClosingButton.addEventListener('click', () => closePopup(popupTypePlace));
+// запускаем слушателя новой заполненной карточки места
+cardPopupForm.addEventListener('submit', fillPlacePopup)
 
 //ФОТО запускаем функции
-photoPopupClosingButton.addEventListener('click', () => closePopup(popupTypePhoto));// запускаем слушателя функции закрытия попапа по клику на крестик
+// запускаем слушателя функции закрытия попапа по клику на крестик
+photoPopupClosingButton.addEventListener('click', () => closePopup(popupTypePhoto));
+
+
+
+
+// включение валидации вызовом enableValidation
+// все настройки передаются при вызове
+
+//enableValidation({
+//  formSelector: '.popup__form',
+//  inputSelector: '.popup__input',
+//  submitButtonSelector: '.popup__button',
+//  inactiveButtonClass: 'popup__button_disabled',
+//  inputErrorClass: 'popup__input_type_error',
+//  errorClass: 'popup__error_visible'
+//});
