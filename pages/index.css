@@ -33,48 +33,17 @@
 @import url(../blocks/popup/__body/popup__body.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/popup/__input/_type_error/popup__input_type_error.css);
 @import url(../blocks/popup/__submit/popup__submit.css);
+@import url(../blocks/popup/__submit/_disabled/popup__submit_disabled.css);
 @import url(../blocks/popup/__close-popup/popup__close-popup.css);
 @import url(../blocks/popup/__photo-body/popup__photo-body.css);
 @import url(../blocks/popup/__photo-name/popup__photo-name.css);
 @import url(../blocks/popup/__photo-url/popup__photo-url.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup/_type_photo/popup_type_photo.css);
+@import url(../blocks/popup/__error/popup__error.css);
+@import url(../blocks/popup/__input-error/_active/popup__input-error_active.css);
 
 /* стили и размеры страницы */
 @import url(../blocks/page/page.css);
-
-
-.popup__submit_disabled {
-  background-color: #fff;
-  border: 1px #000 solid;
-  color: #000;
-  opacity: 0.2;
-  }
-
-.popup__submit_disabled:hover {
-  opacity: 0.2;
-  cursor: default;
-}
-
-.popup__input_type_error {
-  border-bottom-color: #ff0000;
-}
-
-.popup__error {
-  display: block;
-  margin: 5px 0 0 0;
-  padding: 0;
-  min-height: 30px;
-  width: 358px;
-  opacity: 0;
-}
-
-.popup__input-error_active {
-  color: #ff0000;
-  font-size: 12px;
-  line-height: 14.52px;
-  font-weight: 400;
-  font-style: normal;
-  opacity: 1;
-}
