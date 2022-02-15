@@ -100,7 +100,10 @@ function fillProfilePopup() {
   openPopup(popupTypeProfile);
   profileName.value = userName.textContent;
   profileBio.value = userBio.textContent;
+  //checkButtonValidity(profilePopupForm, 'popup__submit_disabled');
 };
+
+//fillProfilePopup();
 
 //записываем новые значения полей профиля при нажатии 
 //на кнопку "сохранить" и закрываем попап (обработчик отправки формы)
@@ -115,11 +118,43 @@ function changProfilePopup(event) {
 // функция открытия попапа по клику на кнопку с карандашиком
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', pressEsc);
+  document.addEventListener('mousedown', clickOverlay);
 }
-//функция закрытия попапа по клику на крестик
+
+
+//функция закрытия попапа по клику на крестик 
+// + закрываем нажатием на esc и overlay
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', pressEsc);
+  document.removeEventListener('mousedown', clickOverlay);
 }
+
+// функция закрытия попапа при нажатии на esc 
+//+ очищаем поля, тк они не сохранены
+function pressEsc (event) {
+  const openedPopup = document.querySelector('.popup_opened');
+  const formElement = openedPopup.querySelector('.popup__form')
+  if (event.key === 'Escape') {
+    closePopup(openedPopup);
+    //if (formElement !== null) {
+    //  formElement.reset();
+    //};
+  };
+};
+
+// функция закрытия попапа при нажатии на esc 
+//+ очищаем поля, тк они не сохранены
+function clickOverlay (event) {
+  const openedPopup = document.querySelector('.popup_opened');
+  if (event.target === openedPopup) {
+    closePopup(openedPopup);
+    //if (formElement !== null) {
+    //  formElement.reset();
+    //};
+  };
+};
 
 // ПРОФИЛЬ запускаем функции
 //запускаем слушателя функция закрытия попапа по клику на крестик
