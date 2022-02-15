@@ -7,6 +7,8 @@ const profileName = document.getElementById('name');
 const profileBio = document.getElementById('bio');
 const profilePopupClosingButton = popupTypeProfile.querySelector('.popup__close-popup'); 
 const profilePopupForm = popupTypeProfile.querySelector('.popup__form');
+const editProfileForm = document.querySelector('.popup__edit_profile');
+const profileSubmitButton = popupTypeProfile.querySelector('.popup__submit');
 
 //КАРТОЧКА МЕСТА объявляем переменные
 const profilePlaceButton = document.querySelector('.profile__add-place');
@@ -100,10 +102,8 @@ function fillProfilePopup() {
   openPopup(popupTypeProfile);
   profileName.value = userName.textContent;
   profileBio.value = userBio.textContent;
-  //checkButtonValidity(profilePopupForm, 'popup__submit_disabled');
+  //checkButtonValidity(editProfileForm, config);
 };
-
-//fillProfilePopup();
 
 //записываем новые значения полей профиля при нажатии 
 //на кнопку "сохранить" и закрываем попап (обработчик отправки формы)
@@ -122,7 +122,6 @@ function openPopup(popup) {
   document.addEventListener('mousedown', clickOverlay);
 }
 
-
 //функция закрытия попапа по клику на крестик 
 // + закрываем нажатием на esc и overlay
 function closePopup(popup) {
@@ -138,9 +137,6 @@ function pressEsc (event) {
   const formElement = openedPopup.querySelector('.popup__form')
   if (event.key === 'Escape') {
     closePopup(openedPopup);
-    //if (formElement !== null) {
-    //  formElement.reset();
-    //};
   };
 };
 
@@ -150,9 +146,6 @@ function clickOverlay (event) {
   const openedPopup = document.querySelector('.popup_opened');
   if (event.target === openedPopup) {
     closePopup(openedPopup);
-    //if (formElement !== null) {
-    //  formElement.reset();
-    //};
   };
 };
 

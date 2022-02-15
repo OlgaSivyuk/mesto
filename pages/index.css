@@ -45,94 +45,36 @@
 @import url(../blocks/page/page.css);
 
 
-
 .popup__submit_disabled {
-  background-color: #E5E5E5;
-  opacity: 0.2;
-  height: 50px;
-  width: 100%;
-  border-radius: 2px;
+  background-color: #fff;
   border: 1px #000 solid;
-  margin: 18px 0 0;
-  padding: 0;
   color: #000;
-  font-family: inherit;
-  font-size: 18px;
-  line-height: 21.78px;
-  font-weight: 400;
-  font-style: normal;
-  text-align: center;
-  cursor: default;
+  opacity: 0.2;
   }
 
+.popup__submit_disabled:hover {
+  opacity: 0.2;
+  cursor: default;
+}
 
 .popup__input_type_error {
   border-bottom-color: #ff0000;
 }
 
 .popup__error {
-  display: none;
+  display: block;
   margin: 5px 0 0 0;
+  padding: 0;
+  min-height: 30px;
+  width: 358px;
+  opacity: 0;
+}
+
+.popup__input-error_active {
   color: #ff0000;
   font-size: 12px;
   line-height: 14.52px;
   font-weight: 400;
   font-style: normal;
-  opacity: 0;
-}
-
-.popup__input-error_active {
-    margin: 0px;
-    padding: 0px;
-    min-height: 30px;
-    opacity: 1;
-    display: block;
-}
-
-/*
-.input__btn_disabled {
-  background-color: #f1f1f1;
-  cursor: default;
-}
-
-.error-message {              ///    это .popup__error 
-  color: #FF3333;
-  font-size: 0.8em;
-  transition: .3s;
-  padding: 0px;
-  opacity: 0;
-}
-
-.input-container__invalid .error-message {
-  padding: 10px;
   opacity: 1;
 }
-
-.input-container__invalid .input__text { 
-  border-color: #FF3333;
-}
-
-.input__text_type_error {  /////  это .popup__input_type_error 
-  border-color: #FF3333;
-}
-
-.error-message {           ///   повтор ????????
-  opacity: 0;
-}
-
-.error-message_visible {   ///   это .popup__error_visible
-  padding: 10px;
-  opacity: 1;
-}
-
-.success-message {
-  color: #23b324;
-  padding: 10px;
-  transition: .3s;
-  opacity: 0;
-}
-
-.success-message__visible {
-  opacity: 1;
-}
-*/
