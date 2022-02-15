@@ -25,34 +25,6 @@ const photoUrl = document.querySelector('.popup__photo-url');
 const photoName = document.querySelector('.popup__photo-name');
 const photoPopupClosingButton = popupTypePhoto.querySelector('.popup__close-popup');
 
-// Отображаем карточки из готового массива
-const initialCards = [
-  {
-    name: 'Питер',
-    link: './images/piter.jpeg'
-  },
-  {
-    name: 'Сочи',
-    link: './images/arkhyz.jpg'
-  },
-  {
-    name: 'Кольский',
-    link: './images/kolsky.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: './images/kamchatka.jpg'
-  },
-  {
-    name: 'Алтай',
-    link: './images/altay.jpg'
-  },
-  {
-    name: 'Карачаево-Черкесия',
-    link: './images/cherkesiya.jpg'
-  }
-];
-
 //ТЕМПЛЕЙТ
 // взяли контент из блока template и положили в новую карточку cardElement
 const cardTemplate = document.querySelector('.template').content; 
@@ -163,23 +135,8 @@ profilePlaceButton.addEventListener('click', () => openPopup(popupTypePlace));
 // запускаем слушателя функция закрытия попапа по клику на крестик
 cardPopupClosingButton.addEventListener('click', () => closePopup(popupTypePlace));
 // запускаем слушателя новой заполненной карточки места
-cardPopupForm.addEventListener('submit', fillPlacePopup)
+cardPopupForm.addEventListener('submit', fillPlacePopup);
 
 //ФОТО запускаем функции
 // запускаем слушателя функции закрытия попапа по клику на крестик
 photoPopupClosingButton.addEventListener('click', () => closePopup(popupTypePhoto));
-
-
-
-
-// включение валидации вызовом enableValidation
-// все настройки передаются при вызове
-
-//enableValidation({
-//  formSelector: '.popup__form',
-//  inputSelector: '.popup__input',
-//  submitButtonSelector: '.popup__button',
-//  inactiveButtonClass: 'popup__button_disabled',
-//  inputErrorClass: 'popup__input_type_error',
-//  errorClass: 'popup__error_visible'
-//});
