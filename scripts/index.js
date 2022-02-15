@@ -7,7 +7,7 @@ const profileName = document.getElementById('name');
 const profileBio = document.getElementById('bio');
 const profilePopupClosingButton = popupTypeProfile.querySelector('.popup__close-popup'); 
 const profilePopupForm = popupTypeProfile.querySelector('.popup__form');
-const editProfileForm = document.querySelector('.popup__edit_profile');
+const profileEditForm = document.querySelector('.popup__form_profile');
 const profileSubmitButton = popupTypeProfile.querySelector('.popup__submit');
 
 //КАРТОЧКА МЕСТА объявляем переменные
@@ -102,7 +102,7 @@ function fillProfilePopup() {
   openPopup(popupTypeProfile);
   profileName.value = userName.textContent;
   profileBio.value = userBio.textContent;
-  //checkButtonValidity(editProfileForm, config);
+  //checkButtonValidity(profileEditForm, config);
 };
 
 //записываем новые значения полей профиля при нажатии 
