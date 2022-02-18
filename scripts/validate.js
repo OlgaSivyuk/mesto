@@ -25,27 +25,32 @@ const hideInputError = ({inputErrorClass, errorClass}, formElement, inputElement
 };
   
 const checkInputValidity = ({...rest}, formElement, inputElement) => {
-  //console.log(inputElement.value);
-  //console.log(inputElement.validity);
   if (inputElement.validity.valid) {
     hideInputError(rest, formElement, inputElement);
   } else {
     showInputError(rest, formElement, inputElement, inputElement.validationMessage);
   };    
 };
-  
 
-function checkButtonValidity ({inactiveButtonClass}, formElement, buttonElement) {
-  if (!formElement.checkValidity()) {
-    buttonElement.classList.add(inactiveButtonClass);
-    buttonElement.setAttribute('disabled', '');
-    //alert ('Хьюстон, у нас проблемы!');
-  } else {
-    buttonElement.classList.remove(inactiveButtonClass);
-    buttonElement.removeAttribute('disabled');
-  };
+function enableButton({inactiveButtonClass}, buttonElement) {
+  buttonElement.classList.remove(inactiveButtonClass);
+  buttonElement.removeAttribute('disabled');
+};
+
+function disableButton({inactiveButtonClass}, buttonElement) {
+  buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.setAttribute('disabled', '');
 };
   
+function checkButtonValidity ({...rest}, formElement, buttonElement) {
+  if (!formElement.checkValidity()) {
+    disableButton(rest, buttonElement)
+  } else {
+    enableButton(rest, buttonElement)
+
+  };
+};
+
 function enableValidation({formSelector, inputSelector, submitButtonSelector, ...rest }) {
   const formList = Array.from(document.querySelectorAll(formSelector)); 
   //console.log(formList);
@@ -59,11 +64,19 @@ function enableValidation({formSelector, inputSelector, submitButtonSelector, ..
     const buttonElement = formElement.querySelector(submitButtonSelector);
     //console.log(buttonElement);
     checkButtonValidity(rest, formElement, buttonElement);
+    
+    
     inputList.forEach(inputElement => {
     inputElement.addEventListener ('input', function () {
       checkInputValidity(rest, formElement, inputElement);
       checkButtonValidity(rest, formElement, buttonElement);
     });
+    });
+
+    // пробуем задизейблить кнопку при повторном открытии
+    formElement.addEventListener('submit', () => {
+      //console.log('сбрасываю активную кнопку');
+      disableButton(rest, buttonElement)
     });
   });
 };
