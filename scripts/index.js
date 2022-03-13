@@ -10,11 +10,12 @@ const userBio = document.querySelector('.profile__bio');
 const popupTypeProfile = document.querySelector('.popup_type_profile');
 const profileName = document.getElementById('name');
 const profileBio = document.getElementById('bio');
-const profilePopupClosingButton = popupTypeProfile.querySelector('.popup__close-popup'); 
 const profilePopupForm = popupTypeProfile.querySelector('.popup__form');
+// форма редактирования профиля (используется в ПР7 formValidation)
+const configprofileEditForm = document.querySelector('.popup__form_profile');
+//не использовались
+const profilePopupClosingButton = popupTypeProfile.querySelector('.popup__close-popup');
 const profileSubmitButton = popupTypeProfile.querySelector('.popup__submit');
-//перенесла для связи с formValidation
-//const configprofileEditForm = document.querySelector('.popup__form_profile');// форма редактирования профиля
 
 
 //КАРТОЧКА МЕСТА объявляем переменные
@@ -22,26 +23,28 @@ const profilePlaceButton = document.querySelector('.profile__add-place');
 const popupTypePlace = document.querySelector('.popup_type_place');
 const placeName = document.getElementById('place-name');
 const placeLink = document.getElementById('place-link');
-const cardPopupClosingButton = popupTypePlace.querySelector('.popup__close-popup'); 
-//перенесла для связи с formValidation
-//const cardPopupForm = popupTypePlace.querySelector('.popup__form');// форма добаввления карточек
-const placeSubmitButton = popupTypePlace.querySelector('.popup__submit');
 const placesSection = document.querySelector('.places');
+// форма добавления карточек (используется в ПР7 formValidation)
+const cardPopupForm = popupTypePlace.querySelector('.popup__form');
+//не использовались
+const cardPopupClosingButton = popupTypePlace.querySelector('.popup__close-popup'); 
+const placeSubmitButton = popupTypePlace.querySelector('.popup__submit');
+
 
 //ФОТО
 const popupTypePhoto = document.querySelector('.popup_type_photo');
 const photoUrl = document.querySelector('.popup__photo-url');
 const photoName = document.querySelector('.popup__photo-name');
+//не использовались
 const photoPopupClosingButton = popupTypePhoto.querySelector('.popup__close-popup');
-//const placeImage = document.querySelector('.place__image');
+const placeImage = document.querySelector('.place__image');
 
+//ПОПАПЫ
+const popups = Array.from(document.querySelectorAll('.popup'));
 
-
-//7 ПР СОЗДАЕМ ФОРМУ === ВОТ ТУТ СОВСЕМ НЕ ПОНЯТНО
-// ищем внутри модалки добавления карточек,  предполагаю,  что это cardPopupForm
-const cardPopupForm = popupTypePlace.querySelector('.popup__form');
-// ищем форму редактирования профиля внутри модалки 
-const configprofileEditForm = document.querySelector('.popup__form_profile'); 
+// ==ПР7 СОЗДАЕМ ФОРМУ== 
+// ищем внутри модалки добавления карточек cardPopupForm
+// ищем форму редактирования профиля внутри модалки configprofileEditForm
 //запускаем валидацию
 const cardPopupFormValidator = new FormValidator(config, cardPopupForm);
 const configprofileEditFormValidator = new FormValidator(config, configprofileEditForm);
@@ -49,44 +52,26 @@ const configprofileEditFormValidator = new FormValidator(config, configprofileEd
 cardPopupFormValidator.enableValidation();
 configprofileEditFormValidator.enableValidation();
 
-
-//6 ПР ПОПАПЫ
-const popups = Array.from(document.querySelectorAll('.popup'));
-
-//ТЕМПЛЕЙТ
-// взяли контент из блока template и положили в новую карточку cardElement
-//7 ПР перенесла в Card
-//const cardTemplate = document.querySelector('.template').content; 
-
-// 7 ПР забрала в Card
-// const cardCreate = (item) => {
-//   const cardElement = cardTemplate.cloneNode(true);
-//   const placeImage = cardElement.querySelector('.place__image');
-//   cardElement.querySelector('.place__name').textContent = item.name;
-//   placeImage.src = item.link; 
-//   placeImage.alt = item.name; 
-  
-//   // добавляем подписку на событие реакций
-//   setEventListeners(cardElement, item); 
-  
-//   // карточка вернулась без добавления в DOM
-//   return cardElement; 
-// };
-
+// ==ПР7 СОЗДАЕМ КАРТОЧКУ== 
 function renderCard(item) {
   const newCard = new Card(item, '.template', openPhoto);
   const cardElement = newCard.cardCreate()
   placesSection.prepend(cardElement);
 };
 
+function render(){
+  initialCards.forEach(renderCard);
+};
+render();
 
-// function render(){
-//   initialCards.forEach(renderCard);
-// };
-// render();
-initialCards.forEach(renderCard);
+function openPhoto(item) {
+  openPopup(popupTypePhoto);
+  photoUrl.src = item.link;
+  photoUrl.alt = item.name;
+  photoName.textContent = item.name;
+};
 
-//СОЗДАНИЕ НОВОЙ КАРТОЧКИ с местом
+//ЗАПОЛНЯЕМ НОВУЮ КАРТОЧКУ с местом
 function fillPlacePopup(evt) {
   evt.preventDefault();
   placesSection.prepend(
@@ -96,34 +81,6 @@ function fillPlacePopup(evt) {
   // сброс валидности прописала в validate.js
 };
 
-// КАРТОЧКИ места функция слушателя реакций (удаление,  лайки, открытие фото)
-// 7 ПР забрала в Card
-// function setEventListeners(element, item) {
-//   element.querySelector('.place__delete').addEventListener('click', deleteCard);
-//   element.querySelector('.place__like').addEventListener('click', likeCard);
-//   element.querySelector('.place__image').addEventListener('click', () => openPhoto(item));
-// };
-
-// 7 ПР забрала в Card
-// function deleteCard(evt) {
-//   evt.target.closest('.place').remove();
-// };
-
-// 7 ПР забрала в Card
-// function likeCard(evt) {
-//   evt.target.classList.toggle('place__like_active');
-// };
-
-// ФОТО функция открытия попапа при клике на элемент
-// 7 ПР не забрала в Card
-function openPhoto(item) {
-  openPopup(popupTypePhoto);
-  photoUrl.src = item.link;
-  photoUrl.alt = item.name;
-  photoName.textContent = item.name;
-};
-
-// ПРОФИЛЬ
 // добавляем переменные имени и деятельности в поля попапа (автозаполнение):
 function fillProfilePopup(popup) {
   openPopup(popup);
@@ -172,9 +129,8 @@ popups.forEach((popup) => {
   });
 });
 
-// =============================== new version of listeners ======================================
-
-//запускаем слушателя функции подстановки переменных 
+// СЛУШАТЕЛИ
+// запускаем слушателя функции подстановки переменных 
 // в карточку профиля
 profileInfoButton.addEventListener('click', function () {
   configprofileEditFormValidator.resetErrors(); // чистим ошибки
