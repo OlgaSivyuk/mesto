@@ -1,5 +1,5 @@
 // Отображаем карточки из готового массива
-const initialCards = [
+export const initialCards = [
     {
       name: 'Питер',
       link: './images/piter.jpeg'
@@ -25,3 +25,4 @@ const initialCards = [
       link: './images/cherkesiya.jpg'
     }
   ];
+
