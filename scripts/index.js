@@ -52,6 +52,13 @@ cardPopupFormValidator.enableValidation();
 configprofileEditFormValidator.enableValidation();
 
 // ==ПР7 СОЗДАЕМ КАРТОЧКУ== 
+const openPhoto = (name, link) => {
+  openPopup(popupTypePhoto);
+  photoUrl.src = link;
+  photoUrl.alt = name;
+  photoName.textContent = name;
+};
+
 function renderCard(item) {
   const newCard = new Card(item, '.template', openPhoto);
   const cardElement = newCard.cardCreate()
@@ -62,13 +69,6 @@ function render(){
   initialCards.forEach(renderCard);
 };
 render();
-
-function openPhoto(item) {
-  openPopup(popupTypePhoto);
-  photoUrl.src = item.link;
-  photoUrl.alt = item.name;
-  photoName.textContent = item.name;
-};
 
 //ЗАПОЛНЯЕМ НОВУЮ КАРТОЧКУ с местом
 function fillPlacePopup(evt) {
