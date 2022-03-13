@@ -1,48 +1,43 @@
 export class Card {
-    constructor(item, cardTemplateSelector, openPhoto) {
-        this._cardTemplate = document.querySelector(cardTemplateSelector).content;
-        this._name = item.name;
-        this._link = item.link;
-        this._openPhoto = openPhoto;
-    }
+  constructor(item, cardTemplateSelector, openPhoto) {
+    this._cardTemplate = document.querySelector(cardTemplateSelector).content;
+    this._name = item.name;
+    this._link = item.link;
+    this._openPhoto = openPhoto;
+  };
 
-    _likeCard(evt) { // здесь убрала стрлочную функцию,  возможно перестанет работать
-      evt.target.classList.toggle('place__like_active');
-    };
+  _likeCard(evt) {
+    evt.target.classList.toggle('place__like_active');
+  };
     
-    _deleteCard(evt) {
-      evt.target.closest('.place').remove();
-    };
+  _deleteCard(evt) {
+    evt.target.closest('.place').remove();
+  };
 
-    //подписались на события
-    _setEventListeners() {
-      this._newCard.querySelector('.place__delete').addEventListener('click', this._deleteCard);
-      this._newCard.querySelector('.place__like').addEventListener('click', this._likeCard);
-      this._newCard.querySelector('.place__image').addEventListener('click', () => {this._openPhoto(this._name, this._link)});
-    };
+  //подписались на события
+  _setEventListeners() {
+    this._newCard.querySelector('.place__delete').addEventListener('click', this._deleteCard);
+    this._newCard.querySelector('.place__like').addEventListener('click', this._likeCard);
+    this._newCard.querySelector('.place__image').addEventListener('click', () => {this._openPhoto(this._name, this._link)});
+  };
 
-    // заполнили карточку    
-    _fillCard(){
-      this._newCard.querySelector('.place__name').textContent = this._name;
-      const placeImage = this._newCard.querySelector('.place__image');
-      placeImage.src = this._link; 
-      placeImage.alt = this._name;
-    }
+  // заполнили карточку    
+  _fillCard() {
+    this._newCard.querySelector('.place__name').textContent = this._name;
+    const placeImage = this._newCard.querySelector('.place__image');
+    placeImage.src = this._link; 
+    placeImage.alt = this._name;
+  };
 
-    //создали карточку с содержимым 
-    cardCreate() {
-      //нашли и склонировали темплейт
-      this._newCard = this._cardTemplate.cloneNode(true);
-
-      // добавляем подписку на событие заполнения карточки
-      this._fillCard();
-      // добавляем подписку на событие реакций
-      this._setEventListeners(); 
-      // карточка вернулась без добавления в DOM
-      return this._newCard; 
-    };
+  //создали карточку с содержимым 
+  cardCreate() {
+    //нашли и склонировали темплейт
+    this._newCard = this._cardTemplate.cloneNode(true);
+    // добавляем подписку на событие заполнения карточки
+    this._fillCard();
+    // добавляем подписку на событие реакций
+    this._setEventListeners(); 
+    // карточка вернулась без добавления в DOM
+    return this._newCard; 
+  };
 }
-
-
-// const item = {name:'123', link:'....'}
-// const card = new Card (item, '.template', openPhoto)

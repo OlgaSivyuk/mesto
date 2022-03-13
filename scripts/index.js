@@ -2,7 +2,6 @@ import { initialCards } from "./initialCards.js"
 import { Card } from "./Card.js"
 import { FormValidator, config } from "./FormValidator.js"
 
-
 //ПРОФИЛЬ объявляем переменные
 const profileInfoButton = document.querySelector('.profile__add-info'); 
 const userName = document.querySelector('.profile__name'); 
