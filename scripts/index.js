@@ -71,11 +71,22 @@ function render(){
 render();
 
 //ЗАПОЛНЯЕМ НОВУЮ КАРТОЧКУ с местом
+// function fillPlacePopup(evt) {
+//   evt.preventDefault();
+//   placesSection.prepend(
+//     cardCreate({ name: placeName.value, link: placeLink.value})
+//   );
+//   cardPopupForm.reset();
+//   // сброс валидности прописала в validate.js
+// };
+
 function fillPlacePopup(evt) {
   evt.preventDefault();
-  placesSection.prepend(
-    cardCreate({ name: placeName.value, link: placeLink.value})
-  );
+  const cardElement = { 
+    name: placeName.value, 
+    link: placeLink.value
+  };
+  renderCard(cardElement);
   cardPopupForm.reset();
   // сброс валидности прописала в validate.js
 };
