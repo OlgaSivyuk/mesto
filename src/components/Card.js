@@ -1,9 +1,9 @@
 export class Card {
-  constructor(item, cardTemplateSelector, openPhoto) {
+  constructor(item, cardTemplateSelector, handleImageClick) {
     this._cardTemplate = document.querySelector(cardTemplateSelector).content;
     this._name = item.name;
     this._link = item.link;
-    this._openPhoto = openPhoto;
+    this._handleImageClick = handleImageClick;
   };
 
   _likeCard(evt) {
@@ -18,7 +18,7 @@ export class Card {
   _setEventListeners() {
     this._newCard.querySelector('.place__delete').addEventListener('click', this._deleteCard);
     this._newCard.querySelector('.place__like').addEventListener('click', this._likeCard);
-    this._newCard.querySelector('.place__image').addEventListener('click', () => {this._openPhoto(this._name, this._link)});
+    this._newCard.querySelector('.place__image').addEventListener('click', () => {this._handleImageClick(this._name, this._link)});
   };
 
   // заполнили карточку    
