@@ -1,39 +1,32 @@
 // Отображаем карточки из готового массива
-
-const Piter = new URL ('../images/piter.jpeg', import.meta.url);
-//import Piter from '../images/piter.jpeg';
-const Sochi = new URL ('../images/arkhyz.jpg', import.meta.url);
-const Kolsky = new URL ('../images/kolsky.jpg', import.meta.url);
-const Kamchatka = new URL ('../images/kamchatka.jpg', import.meta.url);
-const Altay = new URL ('../images/altay.jpg', import.meta.url);
-const Cherkesiya = new URL ('../images/cherkesiya.jpg', import.meta.url);
-
 export const initialCards = [
     {
       name: 'Питер',
-      link: Piter
+      link: './images/piter.jpeg'
     },
     {
       name: 'Сочи',
-      link: Sochi
+      link: './images/arkhyz.jpg'
     },
     {
       name: 'Кольский',
-      link: Kolsky
+      link: './images/kolsky.jpg'
     },
     {
       name: 'Камчатка',
-      link: Kamchatka
+      link: './images/kamchatka.jpg'
     },
     {
       name: 'Алтай',
-      link: Altay
+      link: './images/altay.jpg'
     },
     {
       name: 'Карачаево-Черкесия',
-      link: Cherkesiya
+      link: './images/cherkesiya.jpg'
     }
   ];
+
+
 
 //ПРОФИЛЬ объявляем переменные
 export const profileInfoButton = document.querySelector('.profile__add-info'); 
