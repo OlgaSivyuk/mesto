@@ -19,189 +19,80 @@ import { UserInfo } from './UserInfo.js'
 
 
 
-// ==ПР7 СОЗДАЕМ ФОРМУ== 
-// ищем внутри модалки добавления карточек cardPopupForm
-// ищем форму редактирования профиля внутри модалки configprofileEditForm
-//запускаем валидацию
-const cardPopupFormValidator = new FormValidator(config, cardPopupForm);
-const configprofileEditFormValidator = new FormValidator(config, configprofileEditForm);
+// ==ПР7 создаем и валидируем формы
+const cardPopupFormValidator = new FormValidator(config, cardPopupForm); // ищем внутри модалки добавления карточек cardPopupForm
+const configprofileEditFormValidator = new FormValidator(config, configprofileEditForm); // ищем форму редактирования профиля внутри модалки configprofileEditForm
 // вызываем функцию для отображения модалок
 cardPopupFormValidator.enableValidation();
 configprofileEditFormValidator.enableValidation();
 
-// ==ПР8 создаем экземпляр PopupWithImage
+// ==ПР8 показываем попап с картинкой
 const imagePopup = new PopupWithImage('.popup_type_photo', photoUrl, photoName);
 
 imagePopup.setEventListeners() //делаем подписку на закрытие карточки картинки 
 
-const handleImageClick = (name,link) => { // ПР8 показываем картинку
+const handleImageClick = (name,link) => { 
   imagePopup.open(name,link);
 };
 
-// ==ПР7 СОЗДАЕМ КАРТОЧКУ== 
+// ==ПР7 создаем новую карточку 
 function renderCard(item) {
   const newCard = new Card(item, '.template', handleImageClick);
   const cardElement = newCard.cardCreate()
-  //placesSection.prepend(cardElement);
-  return cardElement; // ПР8 возврящаю массив с карточками
+  return cardElement; // ПР8 возврящаю карточку
 };
 
 
-// ==ПР8 реализация карточки в DOM ==
-// создали Section передали ему,  что отрисовать (initialCards) и чем отрисовать (renderer)
+// ==ПР8 отрисовка массива карточки, передали в Section, что отрисовать (initialCards) и чем отрисовать (renderer)
 const cardSection = new Section ({
-  items: initialCards, //items это массив с данными,  в нашем случае initialCards
+  items: initialCards, 
     renderer: (item) => {
     cardSection.addItem(renderCard(item));
     },
   }, 
   '.places');
   
-// реализуем карточки
-cardSection.renderItems()
+cardSection.renderItems() // реализуем карточки
 
-const userInfo = new UserInfo ({profileNameSelector: '.profile__name', profileBioSelector: '.profile__bio'})
-
+// ==ПР8 заполняем, сохраняем и вставляем новую карточку
 const addCardPopup = new PopupWithForm('.popup_type_place', fillPlacePopup);
-const editProfilePopup = new PopupWithForm('.popup_type_profile', changProfilePopup);
-  
-addCardPopup.setEventListeners()// делаем подписки на закрытие попапа карточки места
-editProfilePopup.setEventListeners()// делаем подписки на закрытие попапа профиля
 
-
-//ЗАПОЛНЯЕМ НОВУЮ КАРТОЧКУ с местом
-function fillPlacePopup(item) {
-  //evt.preventDefault(); // == ПР8 перенесла в PopupWithForm
-  //console.log('item', item)
+function fillPlacePopup(item) { //заполняем карточку с местом
   const cardElement = {}
   cardElement.name = item[placeName.name], 
   cardElement.link = item[placeLink.name],
-  // const cardElement = {
-  // name: placeName.value, 
-  // link: placeLink.value
-  // }
   cardSection.addItem(renderCard(cardElement)); // ПР8 вставляем новую карточку
   renderCard(cardElement);
-  
-  //cardPopupForm.reset(); /// обнуление уже не нужно,  тк мы его сделали уже в функции close // сброс валидности прописала в validate.js
 };
 
+addCardPopup.setEventListeners() // делаем подписки на закрытие попапа карточки места
 
-//записываем новые значения полей профиля (обработчик отправки формы)
-function changProfilePopup(item) { // == ПР8 перенесла в PopupWithForm
-  //event.preventDefault();
+
+// ==ПР8 записываем новые значения полей профиля
+const userInfo = new UserInfo ({profileNameSelector: '.profile__name', profileBioSelector: '.profile__bio'})
+const editProfilePopup = new PopupWithForm('.popup_type_profile', changProfilePopup);
+  
+function changProfilePopup(item) {
   const {name, bio} = item; 
   userInfo.setUserInfo(name, bio)
-  //userName.textContent = name;
-  //userBio.textContent = bio;
-  // userName.textContent = profileName.value;
-  // userBio.textContent = profileBio.value;
 };
 
+editProfilePopup.setEventListeners() // делаем подписки на закрытие попапа профиля
 
-// СЛУШАТЕЛИ
-// запускаем слушателя функции подстановки переменных 
-// в карточку профиля
+
+// запускаем слушателя функции подстановки заполнения профиля
 profileInfoButton.addEventListener('click', function () {
-  configprofileEditFormValidator.resetErrors(); // чистим ошибки
-  configprofileEditFormValidator.checkButtonValidity(); // чистим кнопку
-  
+  configprofileEditFormValidator.resetErrors();
+  configprofileEditFormValidator.checkButtonValidity();
   const {name, bio} = userInfo.getUserInfo()
   profileName.value = name;
   profileBio.value = bio;
-  // profileName.value = userName.textContent;
-  // profileBio.value = userBio.textContent;
-
-  //fillProfilePopup(popupTypeProfile);
-  editProfilePopup.open();//== ПР8 переписала открытие
+  editProfilePopup.open();
 });
-
 
 //запускаем слушателя функции добавления нов.карточки
 profilePlaceButton.addEventListener('click', () => {
-  cardPopupFormValidator.resetErrors(); // чистим ошибки
-  cardPopupFormValidator.checkButtonValidity(); // чистим кнопку
-  //openPopup(popupTypePlace);
-  addCardPopup.open() //== ПР8 переписала открытие
-});
-
-
-
-
-
-
-// function render(){ // ПР8 перенесено в Section
-//   initialCards.forEach(renderCard);
-// };
-// render();
-
-// const openPhoto = (name, link) => {
-//   openPopup(popupTypePhoto);
-//   photoUrl.src = link;
-//   photoUrl.alt = name;
-//   photoName.textContent = name;
-// };
-
-// ОБЩИЕ функции для попапов:
-// ПР8 перенесено в Popup
-// функция открытия попапа по клику на карандашик и крестик
-// function openPopup(popup) {
-//   popup.classList.add('popup_opened');
-//   document.addEventListener('keydown', pressEsc);
-// };
-
-// ПР8 перенесено в Popup
-//функция закрытия попапа
-// function closePopup(popup) {
-//   popup.classList.remove('popup_opened');
-//   document.removeEventListener('keydown', pressEsc);
-// };
-
-// ПР8 перенесено в Popup
-//закрытие попапа при нажатии на esc 
-// function pressEsc (event) {
-//   if (event.key === 'Escape') {
-//     const openedPopup = document.querySelector('.popup_opened');
-//     //const formElement = openedPopup.querySelector('.popup__form')  
-//     closePopup(openedPopup);
-//   };
-// };
-
-// ПР8 перенесено в Popup
-// функция объединяет обработчик оверлея и крестик
-// popups.forEach((popup) => {
-//   popup.addEventListener('mousedown', (event) => {
-//     if (event.target.classList.contains('popup_opened')) {
-//       closePopup(popup)
-//     };
-//     if (event.target.classList.contains('popup__close-popup')) {
-//       closePopup(popup)
-//     };
-//   });
-// });
-
-// добавляем переменные имени и деятельности в поля попапа (автозаполнение):
-// function fillProfilePopup(popup) { // перенесла fillProfilePopup сразу в слушателя клика profileInfoButton == ПР8
-//   openPopup(popup);
-//   profileName.value = userName.textContent;
-//   profileBio.value = userBio.textContent;
-// };
-
-// СЛУШАТЕЛИ
-// запускаем слушателя функции подстановки переменных 
-
-//слушатель сохранения данных в профиле (по кнопке сохранить)
-// profilePopupForm.addEventListener('submit', function (evt) {
-//   changProfilePopup(evt);
-//   closePopup(popupTypeProfile);
-// });
-
-//слушатель сохранения карточки (по кнопке создать)
-// ПР8 закрываем через close в классе PopupWithForm
-// cardPopupForm.addEventListener('submit', (evt) => {
-//   fillPlacePopup(evt);
-//   closePopup(popupTypePlace);
-// });
-
-// слушатель попапа закрытия попапа фото теперь не нужен
-// действие объединено в объединенном обработчике оверлея и крестик
+  cardPopupFormValidator.resetErrors(); 
+  cardPopupFormValidator.checkButtonValidity();
+  addCardPopup.open();
+})
