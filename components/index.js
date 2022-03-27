@@ -9,7 +9,7 @@ import {
   placeLink,
   cardPopupForm,
   photoUrl,
-  photoName } from './constants.js'
+  photoName } from '../utils/constants.js'
 import { Card } from './Card.js'
 import { FormValidator, config } from './FormValidator.js'
 import { Section } from './Section.js'
@@ -19,12 +19,31 @@ import { UserInfo } from './UserInfo.js'
 
 
 
-// ==ПР7 создаем и валидируем формы
+// ==ПР7 создаем валидаторы форм
 const cardPopupFormValidator = new FormValidator(config, cardPopupForm); // ищем внутри модалки добавления карточек cardPopupForm
 const configprofileEditFormValidator = new FormValidator(config, configprofileEditForm); // ищем форму редактирования профиля внутри модалки configprofileEditForm
 // вызываем функцию для отображения модалок
 cardPopupFormValidator.enableValidation();
 configprofileEditFormValidator.enableValidation();
+
+// универсально создаем экземпляры валидаторов всех форм(рекомендация)
+// почему-то с универсальной версией не находит resetErrors и checkButtonValidity
+
+//const formValidators = {}
+// Включение валидации
+// const enableValidation = (config) => {
+// const formList = Array.from(document.querySelectorAll('.popup__form'))
+// formList.forEach((formElement) => {
+//   const validator = new FormValidator(config, formElement)
+//   const formName = formElement.getAttribute('name'); // получаем данные из атрибута `name` у формы
+
+//   formValidators[formName] = validator;  // объект записываем под именем формы
+//   validator.enableValidation();
+// });
+// };
+
+// enableValidation(config);
+
 
 // ==ПР8 показываем попап с картинкой
 const imagePopup = new PopupWithImage('.popup_type_photo', photoUrl, photoName);
@@ -82,6 +101,8 @@ editProfilePopup.setEventListeners() // делаем подписки на за�
 
 // запускаем слушателя функции подстановки заполнения профиля
 profileInfoButton.addEventListener('click', function () {
+  // formValidators['.popup__form_profile'].resetErrors()
+  // formValidators['.popup__form_profile'].checkButtonValidity()
   configprofileEditFormValidator.resetErrors();
   configprofileEditFormValidator.checkButtonValidity();
   const {name, bio} = userInfo.getUserInfo()
@@ -92,6 +113,8 @@ profileInfoButton.addEventListener('click', function () {
 
 //запускаем слушателя функции добавления нов.карточки
 profilePlaceButton.addEventListener('click', () => {
+  // formValidators['.popup__form'].resetErrors()
+  // formValidators['.popup__form'].checkButtonValidity()
   cardPopupFormValidator.resetErrors(); 
   cardPopupFormValidator.checkButtonValidity();
   addCardPopup.open();
