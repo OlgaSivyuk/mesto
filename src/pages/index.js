@@ -45,7 +45,7 @@ configprofileEditFormValidator.enableValidation();
 
 
 // ==ПР8 показываем попап с картинкой
-const imagePopup = new PopupWithImage('.popup_type_photo'); // , photoUrl, photoName);
+const imagePopup = new PopupWithImage('.popup_type_photo');
 
 imagePopup.setEventListeners() //делаем подписку на закрытие карточки картинки 
 
