@@ -8,14 +8,13 @@ import {
   placeName,
   placeLink,
   cardPopupForm,
-  photoUrl,
-  photoName } from '../utils/constants.js'
-import { Card } from '../components/Card.js'
-import { FormValidator, config } from '../components/FormValidator.js'
-import { Section } from '../components/Section.js'
-import { PopupWithImage } from '../components/PopupWithImage.js'
-import { PopupWithForm } from '../components/PopupWithForm.js'
-import { UserInfo } from '../components/UserInfo.js'
+  config } from '../utils/constants.js';
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { Section } from '../components/Section.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
 
 import '../pages/index.css';
 
@@ -46,7 +45,7 @@ configprofileEditFormValidator.enableValidation();
 
 
 // ==ПР8 показываем попап с картинкой
-const imagePopup = new PopupWithImage('.popup_type_photo', photoUrl, photoName);
+const imagePopup = new PopupWithImage('.popup_type_photo'); // , photoUrl, photoName);
 
 imagePopup.setEventListeners() //делаем подписку на закрытие карточки картинки 
 
@@ -74,7 +73,7 @@ const cardSection = new Section ({
 cardSection.renderItems() // реализуем карточки
 
 // ==ПР8 заполняем, сохраняем и вставляем новую карточку
-const addCardPopup = new PopupWithForm('.popup_type_place', fillPlacePopup);
+const addCardPopup = new PopupWithForm('.popup_type_place', fillPlacePopup); //fillPlacePopup = handleFormSubmit
 
 function fillPlacePopup(item) { //заполняем карточку с местом
   const cardElement = {}
@@ -89,7 +88,7 @@ addCardPopup.setEventListeners() // делаем подписки на закр�
 
 // ==ПР8 записываем новые значения полей профиля
 const userInfo = new UserInfo ({profileNameSelector: '.profile__name', profileBioSelector: '.profile__bio'})
-const editProfilePopup = new PopupWithForm('.popup_type_profile', changProfilePopup);
+const editProfilePopup = new PopupWithForm('.popup_type_profile', changProfilePopup); //changProfilePopup = handleFormSubmit
   
 function changProfilePopup(item) {
   const {name, bio} = item; 

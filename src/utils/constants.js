@@ -35,6 +35,15 @@ export const initialCards = [
   ];
 
 
+export const config = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__submit',
+    inactiveButtonClass: 'popup__submit_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error_active'
+    };
+  
 
 //ПРОФИЛЬ объявляем переменные
 export const profileInfoButton = document.querySelector('.profile__add-info'); 
@@ -54,5 +63,5 @@ export const cardPopupForm = popupTypePlace.querySelector('.popup__form');
 
 //ФОТО
 export const popupTypePhoto = document.querySelector('.popup_type_photo');
-export const photoUrl = document.querySelector('.popup__photo-url');
-export const photoName = document.querySelector('.popup__photo-name');
+//export const photoUrl = document.querySelector('.popup__photo-url');
+//export const photoName = document.querySelector('.popup__photo-name');

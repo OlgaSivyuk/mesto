@@ -1,5 +1,5 @@
 // создаем класс,  который настраивает валидацию полей формы
-class FormValidator{
+export class FormValidator{
   constructor(config, form){
     this._form = form
     this._inputSelector = config.inputSelector
@@ -82,13 +82,13 @@ class FormValidator{
   };
 };
 
-const config = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-  };
+// const config = {
+//   formSelector: '.popup__form',
+//   inputSelector: '.popup__input',
+//   submitButtonSelector: '.popup__submit',
+//   inactiveButtonClass: 'popup__submit_disabled',
+//   inputErrorClass: 'popup__input_type_error',
+//   errorClass: 'popup__input-error_active'
+//   };
 
-export { FormValidator, config }
+//export { FormValidator, config }
