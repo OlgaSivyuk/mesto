@@ -7,7 +7,7 @@ export class Section {
   
   renderItems(){ //перебираем как initialCards
     this._items.forEach(item => { // объект с полями {name, link} 
-      this._renderer(item, this._container) // зовем функцию рендерер
+      this._renderer(item)//, this._container) // зовем функцию рендерер
     });
   };
   
