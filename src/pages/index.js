@@ -16,7 +16,18 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 
+import { api} from '../components/Api.js'; //импортим сам экземпляр класса апи, а не сам класс
+
 import '../pages/index.css';
+
+
+// ==ПР9 зовем метод из класса АПИ
+api.getProfile() // работаем с профилем
+  .then(res => {
+    //console.log('ответ', res)
+    userInfo.setUserInfo(res.name, res.about)//передаем данные профиля пользователя. name и about это поля,  которые выводятся в ответе на запрос апи,  и соответствуют name и bio
+    //userId = res._id // получаем в результате вызова getProfile и он не связан с токеном не равен ему
+  });
 
 // ==ПР7 создаем валидаторы форм
 const cardPopupFormValidator = new FormValidator(config, cardPopupForm); // ищем внутри модалки добавления карточек cardPopupForm
