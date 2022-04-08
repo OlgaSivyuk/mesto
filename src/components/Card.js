@@ -27,8 +27,13 @@ export class Card {
     evt.target.classList.toggle('place__like_active');
   };
     
-  _deleteCard(evt) {
-    evt.target.closest('.place').remove();
+  // _deleteCard(evt) {
+  //   evt.target.closest('.place').remove();
+  // };
+
+  _deleteCard = () => { // добавила стрелочную функцию, тк иначе удаление карточки не срабатывает
+    this._newCard.remove();
+    this._newCard = null;
   };
 
   //подписались на события
