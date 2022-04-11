@@ -55,7 +55,7 @@ class Api {
     .catch(console.log)
   }
 
-  deleteCard(id) { // метод добавления новой карточки // метод post
+  deleteCard(id) { // метод удаления // метод delete
     return fetch(`${this._baseUrl}/cards/${id}`,{ // применяем шаблонные строки и id, который забираем из карточки во время удаления
         method: "DELETE",
         headers: this._headers,
@@ -65,6 +65,25 @@ class Api {
     .catch(console.log)
   }
 
+  deleteLike(id) { // метод удаления // метод delete
+    return fetch(`${this._baseUrl}/cards/${id}/likes`,{ 
+        method: "DELETE",
+        headers: this._headers,
+    })
+    .then(res => res.ok ? res.json():
+      Promise.reject(res.status))
+    .catch(console.log)
+  }
+
+  addLike(id) { // метод добавления // метод put
+    return fetch(`${this._baseUrl}/cards/${id}/likes`,{ 
+        method: "PUT",
+        headers: this._headers,
+    })
+    .then(res => res.ok ? res.json():
+      Promise.reject(res.status))
+    .catch(console.log)
+  }
 
 
   }

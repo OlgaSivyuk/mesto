@@ -20,13 +20,13 @@ import { api} from '../components/Api.js'; //импортим сам экзем�
 
 import '../pages/index.css';
 
-
+let userId
 //==ПР9 зовем метод из класса АПИ
 api.getProfile() // работаем с профилем
   .then(res => {
-    //console.log('ответ профайл', res)
+    console.log('ответ профайл', res)
     userInfo.setUserInfo(res.name, res.about)//передаем данные профиля пользователя. name и about это поля,  которые выводятся в ответе на запрос апи,  и соответствуют name и bio
-    //userId = res._id // получаем в результате вызова getProfile и он не связан с токеном не равен ему
+    userId = res._id // получаем в результате вызова getProfile и он не связан с токеном не равен ему
   });
 
 api.getInitialCards()
@@ -37,7 +37,9 @@ api.getInitialCards()
         name: item.name, 
         link: item.link,
         likes: item.likes,
-        cardId: item._id
+        cardId: item._id,
+        userId: userId,
+        ownerId: item.owner._id,
     });
     cardSection.addItem(cardElement)
     
@@ -95,11 +97,27 @@ function renderCard(item) {
       confirmPopup.changeSubmitHandler(() => {
         console.log(cardId);
         api.deleteCard(cardId) // id нам нужно передать внутрь карточки newCard
-        .then(res => {
-        console.log('res', res);
-        newCard.deleteCard();
+          .then(res => {
+          console.log('res', res);
+          newCard.deleteCard();
+          })
       })
-      })
+    },
+    (cardId) => { //handleLikeCklick
+      console.log('like');
+      if (newCard.isLiked()){ //если карточка с лайком ==> удали лайк
+        api.deleteLike(cardId)
+        .then(res => { // 1. получаю ответ
+          console.log('удаляю лайк', res);
+          newCard.setLikes(res.likes) //2. зову setLikes чтобы обновить счетчик //3. передается кол-во новых лайков //4. новые лайки принимаются в setLikes (newLikes)
+        })
+      } else { // если лайка нет ==> поставь лайк
+          api.addLike(cardId)
+            .then(res => { // 1. получаю ответ
+              console.log('ставлю лайк', res);
+              newCard.setLikes(res.likes) //2. зову setLikes чтобы обновить счетчик //3. передается кол-во новых лайков //4. новые лайки принимаются в setLikes (newLikes)
+            })
+        } 
     }
     );
   const cardElement = newCard.cardCreate()
@@ -136,7 +154,9 @@ function fillPlacePopup(item) { //заполняем карточку с мес�
         name: res.name, 
         link: res.link,
         likes: res.likes,
-        cardId: res._id
+        cardId: res._id,
+        userId: userId,
+        ownerId: res.owner._id,
       });
     cardSection.addItem(cardElement);  
    })
