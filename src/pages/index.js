@@ -35,7 +35,9 @@ api.getInitialCards()
     cardList.forEach(item => {
       const cardElement = renderCard({
         name: item.name, 
-        link: item.link
+        link: item.link,
+        likes: item.likes,
+        cardId: item._id
     });
     cardSection.addItem(cardElement)
     
@@ -82,7 +84,24 @@ const handleImageClick = (name,link) => {
 
 // ==ПР7 создаем новую карточку 
 function renderCard(item) {
-  const newCard = new Card(item, '.template', handleImageClick);
+  const newCard = new Card(
+    item,
+    '.template', 
+    handleImageClick,
+    (cardId) => { //  handleDeleteClick
+      console.log('clicked button')
+      console.log('', cardId)
+      confirmPopup.open();
+      confirmPopup.changeSubmitHandler(() => {
+        console.log(cardId);
+        api.deleteCard(cardId) // id нам нужно передать внутрь карточки newCard
+        .then(res => {
+        console.log('res', res);
+        newCard.deleteCard();
+      })
+      })
+    }
+    );
   const cardElement = newCard.cardCreate()
   return cardElement; // ПР8 возврящаю карточку
 };
@@ -116,6 +135,8 @@ function fillPlacePopup(item) { //заполняем карточку с мес�
       const cardElement = renderCard({
         name: res.name, 
         link: res.link,
+        likes: res.likes,
+        cardId: res._id
       });
     cardSection.addItem(cardElement);  
    })
@@ -141,6 +162,18 @@ function changProfilePopup (item) { //changProfilePopup = handleFormSubmit, зо
 };
 
 editProfilePopup.setEventListeners() // делаем подписки на закрытие попапа профиля
+
+
+// ==ПР9 уточняем удаление карточки
+const confirmPopup = new PopupWithForm('.popup_type_delete-card') //, () => { // функцию удаления карточки переносим в класс работы с формами PopupWithForm
+  //   api.deleteCard(id) // id нам нужно передать внутрь карточки newCard
+  //     .then(res => {
+  //       console.log('res', res)
+  //     })
+  //   console.log('delete')
+  // });
+
+confirmPopup.setEventListeners() // делаем подписку для закрытия попапа подтверждения
 
 
 // запускаем слушателя функции подстановки заполнения профиля

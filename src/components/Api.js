@@ -53,9 +53,17 @@ class Api {
     .then(res => res.ok ? res.json():
       Promise.reject(res.status))
     .catch(console.log)
-}
+  }
 
-
+  deleteCard(id) { // метод добавления новой карточки // метод post
+    return fetch(`${this._baseUrl}/cards/${id}`,{ // применяем шаблонные строки и id, который забираем из карточки во время удаления
+        method: "DELETE",
+        headers: this._headers,
+    })
+    .then(res => res.ok ? res.json():
+      Promise.reject(res.status))
+    .catch(console.log)
+  }
 
 
 
