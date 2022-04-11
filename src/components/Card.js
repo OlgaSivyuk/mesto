@@ -56,6 +56,7 @@ export class Card {
 
   //создали карточку с содержимым 
   cardCreate() {
+
     //this._newCard = this._cardTemplate.cloneNode(true); //нашли и склонировали темплейт
     this._fillCard(); // добавляем подписку на событие заполнения карточки
     this._setEventListeners(); // добавляем подписку на событие реакций

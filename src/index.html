@@ -20,10 +20,12 @@
       <img alt="Фото профиля" class="profile__avatar" src="<%=require('./images/avatar.jpg')%>"/>
       <div class="profile__info">
         <div class="profile__top-row">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <!-- Жак-Ив Кусто: предзаполненные поля профиля очистила -->
+          <h1 class="profile__name"></h1>
           <button type="button" id="open_popup" class="profile__add-info" aria-label="Редактировать профиль"></button>
         </div>
-        <p class="profile__bio">Исследователь океана</p>
+        <!-- Исследователь океана: предзаполненные поля профиля очистила -->
+        <p class="profile__bio"></p>
       </div>
       <button type="button" class="profile__add-place" aria-label="Добавить фото"></button>
     </section>
@@ -64,6 +66,17 @@
     </div>
   </div>
 
+  <!-- уточняем об удалении карточки -->
+  <div class="popup popup_type_delete-card">
+    <div class="popup__body">
+      <h3 class="popup__title">Вы уверены?</h3>
+      <form class="popup__form popup__form_delete-card" id="form-place" name="delete-place-card" novalidate>
+        <button type="submit" class="popup__submit">Да</button>
+      </form>
+      <button type="button" class="popup__close-popup" aria-label="Закрыть форму удаления карточки"></button>
+    </div>
+  </div>
+
   <div class="popup popup_type_photo">
     <div class="popup__photo-body">
       <img class="popup__photo-url" src="." alt=""/>
@@ -77,7 +90,10 @@
       <img alt="" class="place__image" src="."/>
       <div class="place__info">
         <h2 class="place__name"></h2>
-        <button type="button" class="place__like" aria-label="Нравится"></button>
+        <div class="place__reaction">
+          <button type="button" class="place__like" aria-label="Нравится"></button>
+          <span class="place__like-count"></span>
+        </div>  
       </div>
       <button type="button" class="place__delete" arial-label="Удалить"></button>
     </article>

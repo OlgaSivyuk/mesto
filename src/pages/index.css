@@ -21,8 +21,10 @@
 @import url(../blocks/place/__image/place__image.css);
 @import url(../blocks/place/__info/place__info.css);
 @import url(../blocks/place/__name/place__name.css);
+@import url(../blocks/place/__reaction/place__reaction.css); /* обертка */
 @import url(../blocks/place/__like/place__like.css);
 @import url(../blocks/place/__like/_active/place__like_active.css);
+@import url(../blocks/place/__like-count/place__like-count.css); /* подсчет лайков */
 @import url(../blocks/place/__delete/place__delete.css);
 
 /* футтер */
