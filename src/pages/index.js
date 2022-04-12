@@ -1,9 +1,11 @@
 import { 
   initialCards,
   profileInfoButton,
+  profileAvatarButton,
   profileName,
   profileBio,
   configprofileEditForm,
+  configprofileAvatarForm,
   profilePlaceButton,
   placeName,
   placeLink,
@@ -52,9 +54,11 @@ api.getInitialCards()
 // ==ПР7 создаем валидаторы форм
 const cardPopupFormValidator = new FormValidator(config, cardPopupForm); // ищем внутри модалки добавления карточек cardPopupForm
 const configprofileEditFormValidator = new FormValidator(config, configprofileEditForm); // ищем форму редактирования профиля внутри модалки configprofileEditForm
+const configprofileAvatarFormValidator = new FormValidator(config, configprofileAvatarForm); // ==ПР9 ищем форму редактирования аватарки внутри модалки
 // вызываем функцию для отображения модалок
 cardPopupFormValidator.enableValidation();
 configprofileEditFormValidator.enableValidation();
+configprofileAvatarFormValidator.enableValidation();
 
 // универсально создаем экземпляры валидаторов всех форм(рекомендация)
 // почему-то с универсальной версией не находит resetErrors и checkButtonValidity
@@ -143,7 +147,7 @@ function fillPlacePopup(item) { //заполняем карточку с мес�
   // const cardElement = {}
   // cardElement.name = item[placeName.name], 
   // cardElement.link = item[placeLink.name],
-
+  addCardPopup.renderLoading(true)
   api.addNewCard(
     item[placeName.name], 
     item[placeLink.name]
@@ -162,6 +166,8 @@ function fillPlacePopup(item) { //заполняем карточку с мес�
    })
   // cardSection.addItem(renderCard(cardElement)); // ПР8 вставляем новую карточку
   // renderCard(cardElement);
+  .catch(err => console.log(err))
+  .finally(() => addCardPopup.renderLoading(false));
 };
 
 addCardPopup.setEventListeners() // делаем подписки на закрытие попапа карточки места
@@ -173,12 +179,14 @@ const editProfilePopup = new PopupWithForm('.popup_type_profile', changeProfileP
   
 function changeProfilePopup (item) { //changProfilePopup = handleFormSubmit, зовем ее с данными инпутов, которые попадают в текщую функцию в виде item
   const {name, bio} = item; 
-
+  editProfilePopup.renderLoading(true)
   api.editProfile(name, bio)// ==ПР9 вклиниваемся в функцию подстановки данных профиля и отправим запрос на редактирование на сервер //отправляем данные полей на сервер с помощью fetch
     .then(res => { // сначала мы ждем ответ от сервира,  что все ок,  а после выставляем данные на страничку
       //console.log('ответ', res)
       userInfo.setUserInfo(res.name, res.bio)
     })
+    .catch(err => console.log(err))
+    .finally(() => editProfilePopup.renderLoading(false));
 };
 
 editProfilePopup.setEventListeners() // делаем подписки на закрытие попапа профиля
@@ -196,7 +204,7 @@ const confirmPopup = new PopupWithForm('.popup_type_delete-card') //, () => { //
 confirmPopup.setEventListeners() // делаем подписку для закрытия попапа подтверждения
 
 
-// const avatarPopup = new PopupWithForm('.popup_type_profile-avatar', changeProfileAvatarPopup)
+const avatarPopup = new PopupWithForm('.popup_type_profile-avatar')
 
 // function changeProfileAvatarPopup(item){
 //   const {avatar} = item;
@@ -206,7 +214,7 @@ confirmPopup.setEventListeners() // делаем подписку для зак�
 //     userInfo.setUserInfo(res.avatar)
 //     })
 // }
-// avatarPopup.setEventListeners()
+avatarPopup.setEventListeners()
 
 // запускаем слушателя функции подстановки заполнения профиля
 profileInfoButton.addEventListener('click', function () {
@@ -228,4 +236,12 @@ profilePlaceButton.addEventListener('click', () => {
   cardPopupFormValidator.resetErrors(); 
   cardPopupFormValidator.checkButtonValidity();
   addCardPopup.open();
+});
+
+//запускаем слушателя функции обновления аватара
+profileAvatarButton.addEventListener('click', () => {
+  // configprofileAvatarFormValidator.resetErrors(); 
+  // configprofileAvatarFormValidator.checkButtonValidity();
+
+  avatarPopup.open();
 })

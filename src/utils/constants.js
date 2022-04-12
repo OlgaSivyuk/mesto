@@ -46,7 +46,8 @@ export const config = {
   
 
 //ПРОФИЛЬ объявляем переменные
-export const profileInfoButton = document.querySelector('.profile__add-info'); 
+export const profileInfoButton = document.querySelector('.profile__add-info');
+export const profileAvatarButton = document.querySelector('.profile__avatar-button');
 export const popupTypeProfile = document.querySelector('.popup_type_profile');
 export const profileName = document.getElementById('name');
 export const profileBio = document.getElementById('bio');
@@ -54,6 +55,9 @@ export const profileBio = document.getElementById('bio');
 
 // форма редактирования профиля (используется в ПР7 formValidation)
 export const configprofileEditForm = document.querySelector('.popup__form_profile');
+
+// форма редактирования аватарки профиля ПР9
+export const configprofileAvatarForm = document.querySelector('.popup__form_profile-avatar')
 
 //КАРТОЧКА МЕСТА объявляем переменные
 export const profilePlaceButton = document.querySelector('.profile__add-place');
