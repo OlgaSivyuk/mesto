@@ -16,8 +16,11 @@
 
   <main class="content">
     <section class="profile">
+      <div class="profile__avatar">
+       <button title="Редактировать аватар" class="profile__avatar-button"></button>
+     </div>
       <!-- <img alt="Фото профиля" class="profile__avatar" src="./images/avatar.jpg"/> -->
-      <img alt="Фото профиля" class="profile__avatar" src="<%=require('./images/avatar.jpg')%>"/>
+      <!-- <img alt="Фото профиля" class="profile__avatar" src="<%=require('./images/avatar.jpg')%>"/> -->
       <div class="profile__info">
         <div class="profile__top-row">
           <!-- Жак-Ив Кусто: предзаполненные поля профиля очистила -->
@@ -49,6 +52,19 @@
         <button type="submit" class="popup__submit">Сохранить</button>
       </form>
       <button type="button" class="popup__close-popup" aria-label="Закрыть редактирование профиля"></button>
+    </div>
+  </div>
+
+  <!-- редактируем аватарку профиля -->
+  <div class="popup popup_type_profile-avatar">
+    <div class="popup__body">
+      <h3 class="popup__title">Обновить автар</h3>
+      <form class="popup__form popup__form_profile-avatar" id="form-profile-avatar" name="edit-profile-avatar" novalidate>
+        <input type="url" id="profile-avatar" name="profile-avatar-link" class="popup__input popup__input_profile-avatar_link" placeholder="Ссылка на картинку" required>
+        <span id="error-profile-avatar-link" class="popup__error"></span>
+        <button type="submit" class="popup__submit">Сохранить</button>
+      </form>
+      <button type="button" class="popup__close-popup" aria-label="Закрыть форму редактирования аватара"></button>
     </div>
   </div>
 

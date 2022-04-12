@@ -50,6 +50,8 @@ export const profileInfoButton = document.querySelector('.profile__add-info');
 export const popupTypeProfile = document.querySelector('.popup_type_profile');
 export const profileName = document.getElementById('name');
 export const profileBio = document.getElementById('bio');
+//export const profileAvatar = document.getElementById('profile-avatar')
+
 // форма редактирования профиля (используется в ПР7 formValidation)
 export const configprofileEditForm = document.querySelector('.popup__form_profile');
 

@@ -168,10 +168,10 @@ addCardPopup.setEventListeners() // делаем подписки на закр�
 
 
 // ==ПР8 записываем новые значения полей профиля
-const userInfo = new UserInfo ({profileNameSelector: '.profile__name', profileBioSelector: '.profile__bio'})
-const editProfilePopup = new PopupWithForm('.popup_type_profile', changProfilePopup); //changProfilePopup = handleFormSubmit
+const userInfo = new UserInfo ({profileNameSelector: '.profile__name', profileBioSelector: '.profile__bio' })
+const editProfilePopup = new PopupWithForm('.popup_type_profile', changeProfilePopup); //changProfilePopup = handleFormSubmit
   
-function changProfilePopup (item) { //changProfilePopup = handleFormSubmit, зовем ее с данными инпутов, которые попадают в текщую функцию в виде item
+function changeProfilePopup (item) { //changProfilePopup = handleFormSubmit, зовем ее с данными инпутов, которые попадают в текщую функцию в виде item
   const {name, bio} = item; 
 
   api.editProfile(name, bio)// ==ПР9 вклиниваемся в функцию подстановки данных профиля и отправим запрос на редактирование на сервер //отправляем данные полей на сервер с помощью fetch
@@ -196,6 +196,18 @@ const confirmPopup = new PopupWithForm('.popup_type_delete-card') //, () => { //
 confirmPopup.setEventListeners() // делаем подписку для закрытия попапа подтверждения
 
 
+// const avatarPopup = new PopupWithForm('.popup_type_profile-avatar', changeProfileAvatarPopup)
+
+// function changeProfileAvatarPopup(item){
+//   const {avatar} = item;
+//   api.editProfileAvatar(avatar)
+//     .then(res => {
+//     console.log('avatar', res)
+//     userInfo.setUserInfo(res.avatar)
+//     })
+// }
+// avatarPopup.setEventListeners()
+
 // запускаем слушателя функции подстановки заполнения профиля
 profileInfoButton.addEventListener('click', function () {
   // formValidators['.popup__form_profile'].resetErrors()
@@ -205,6 +217,7 @@ profileInfoButton.addEventListener('click', function () {
   const {name, bio} = userInfo.getUserInfo()
   profileName.value = name;
   profileBio.value = bio;
+
   editProfilePopup.open();
 });
 
