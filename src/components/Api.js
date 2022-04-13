@@ -85,18 +85,18 @@ class Api {
     .catch(console.log)
   }
 
-  // editProfileAvatar(avatar) { // метод добавления // метод put
-  //   return fetch(`${this._baseUrl}/users/me/avatar`,{ 
-  //       method: "PATCH",
-  //       headers: this._headers,
-  //       body: JSON.stringify({ // делаем из объекта строку для передачи данных
-  //         avatar
-  //     })
-  //   })
-  //   .then(res => res.ok ? res.json():
-  //     Promise.reject(res.status))
-  //   .catch(console.log)
-  // }
+  editProfileAvatar(avatar) { // метод добавления // метод put
+    return fetch(`${this._baseUrl}/users/me/avatar`,{ 
+        method: "PATCH",
+        headers: this._headers,
+        body: JSON.stringify({ // делаем из объекта строку для передачи данных
+          avatar
+      })
+    })
+    .then(res => res.ok ? res.json():
+      Promise.reject(res.status))
+    .catch(console.log)
+  }
 
   
   }

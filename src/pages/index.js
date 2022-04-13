@@ -4,6 +4,7 @@ import {
   profileAvatarButton,
   profileName,
   profileBio,
+  profileAvatar,
   configprofileEditForm,
   configprofileAvatarForm,
   profilePlaceButton,
@@ -174,7 +175,7 @@ addCardPopup.setEventListeners() // делаем подписки на закр�
 
 
 // ==ПР8 записываем новые значения полей профиля
-const userInfo = new UserInfo ({profileNameSelector: '.profile__name', profileBioSelector: '.profile__bio' })
+const userInfo = new UserInfo ({profileNameSelector: '.profile__name', profileBioSelector: '.profile__bio', profileAvatarSelector: '.profile__avatar' })
 const editProfilePopup = new PopupWithForm('.popup_type_profile', changeProfilePopup); //changProfilePopup = handleFormSubmit
   
 function changeProfilePopup (item) { //changProfilePopup = handleFormSubmit, зовем ее с данными инпутов, которые попадают в текщую функцию в виде item
@@ -204,16 +205,21 @@ const confirmPopup = new PopupWithForm('.popup_type_delete-card') //, () => { //
 confirmPopup.setEventListeners() // делаем подписку для закрытия попапа подтверждения
 
 
-const avatarPopup = new PopupWithForm('.popup_type_profile-avatar')
+const avatarPopup = new PopupWithForm('.popup_type_profile-avatar', changeProfileAvatarPopup)
 
 // function changeProfileAvatarPopup(item){
 //   const {avatar} = item;
-//   api.editProfileAvatar(avatar)
-//     .then(res => {
-//     console.log('avatar', res)
-//     userInfo.setUserInfo(res.avatar)
-//     })
+//   userInfo.setUserAvatar(avatar)
 // }
+
+function changeProfileAvatarPopup(item){
+  const {avatar} = item;
+  api.editProfileAvatar(avatar)
+    .then(res => {
+    console.log('avatar', res)
+    userInfo.setUserAvatar(res.name, res.about, res.avatar)
+    })
+}
 avatarPopup.setEventListeners()
 
 // запускаем слушателя функции подстановки заполнения профиля
@@ -225,7 +231,6 @@ profileInfoButton.addEventListener('click', function () {
   const {name, bio} = userInfo.getUserInfo()
   profileName.value = name;
   profileBio.value = bio;
-
   editProfilePopup.open();
 });
 
@@ -240,8 +245,9 @@ profilePlaceButton.addEventListener('click', () => {
 
 //запускаем слушателя функции обновления аватара
 profileAvatarButton.addEventListener('click', () => {
-  // configprofileAvatarFormValidator.resetErrors(); 
-  // configprofileAvatarFormValidator.checkButtonValidity();
-
-  avatarPopup.open();
+  configprofileAvatarFormValidator.resetErrors(); 
+  configprofileAvatarFormValidator.checkButtonValidity();
+  // const {avatar} = userInfo.getUserInfo()
+  // profileAvatar.value = avatar;
+  avatarPopup.open();  
 })
