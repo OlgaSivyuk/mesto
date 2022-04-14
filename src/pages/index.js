@@ -184,17 +184,9 @@ confirmPopup.setEventListeners() // делаем подписку для зак�
 // ==ПР9 меняем аватарку
 const avatarPopup = new PopupWithForm('.popup_type_profile-avatar', changeProfileAvatarPopup)
 
-// function changeProfileAvatarPopup(item) {
-//   api.editProfileAvatar(item) // работаем с профилем
-//   .then(res => {
-//     console.log('ответ аватар', res)
-//     userInfo.setUserAvatar(item['profile-avatar-link'])
-//   });
-// }
-
 function changeProfileAvatarPopup(item) {
   avatarPopup.renderLoading(true)
-  api.editProfileAvatar(item[profileAvatar])
+  api.editProfileAvatar(item[profileAvatar.name])
   .then(res => {
     console.log('ответ аватар', res)
     userInfo.setUserAvatar(item['profile-avatar-link'])
@@ -205,7 +197,13 @@ function changeProfileAvatarPopup(item) {
 
 avatarPopup.setEventListeners()
 
-
+// function changeProfileAvatarPopup(item) {
+//   api.editProfileAvatar(item) // работаем с профилем
+//   .then(res => {
+//     console.log('ответ аватар', res)
+//     userInfo.setUserAvatar(item['profile-avatar-link'])
+//   });
+// }
 
 
 
