@@ -9,17 +9,17 @@ export class UserInfo {
     return {
       name: this._userName.textContent,
       bio: this._userBio.textContent,
+      avatar: this._userAvatar.src
     };
   }
 
   setUserInfo(name, bio) {
     this._userName.textContent = name;
     this._userBio.textContent = bio;
-    //this._userAvatar.src = avatar;
   };
-  
-  setUserAvatar(link) {
-    this._userAvatar.style.backgroundImage = `url(${link})`;
+
+  setUserAvatar(avatar){
+    this._userAvatar.src = avatar;
   }
 
 };

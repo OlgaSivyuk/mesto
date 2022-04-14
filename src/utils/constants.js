@@ -47,7 +47,7 @@ export const config = {
 
 //ПРОФИЛЬ объявляем переменные
 export const profileInfoButton = document.querySelector('.profile__add-info');
-export const profileAvatarButton = document.querySelector('.profile__avatar-button');
+export const profileAvatarButton = document.querySelector('.profile__avatar-button'); // кнопка редактирования аватара
 export const popupTypeProfile = document.querySelector('.popup_type_profile');
 export const profileName = document.getElementById('name');
 export const profileBio = document.getElementById('bio');
