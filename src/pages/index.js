@@ -1,5 +1,4 @@
 import { 
-  initialCards,
   profileInfoButton,
   profileAvatarButton,
   profileName,
@@ -23,15 +22,70 @@ import { api} from '../components/Api.js'; //импортим сам экзем�
 
 import '../pages/index.css';
 
+// ==ПР7 создаем валидаторы форм
+const cardPopupFormValidator = new FormValidator(config, cardPopupForm); 
+const configprofileEditFormValidator = new FormValidator(config, configprofileEditForm); 
+const configprofileAvatarFormValidator = new FormValidator(config, configprofileAvatarForm); 
+// вызываем функцию для отображения модалок
+cardPopupFormValidator.enableValidation();
+configprofileEditFormValidator.enableValidation();
+configprofileAvatarFormValidator.enableValidation();
+
+// ==ПР8 записываем новые значения полей профиля
+const userInfo = new UserInfo ({profileNameSelector: '.profile__name', profileBioSelector: '.profile__bio', profileAvatarSelector: '.profile__avatar' })
+
+
+//------ редактируем данные профиля --------
+
 let userId
-//==ПР9 зовем метод из класса АПИ
-api.getProfile() // работаем с профилем
+
+// ==ПР9 зовем метод из класса АПИ, достаем данные профиля
+api.getProfile() 
   .then(res => {
-    console.log('ответ профайл', res)
-    userInfo.setUserInfo(res.name, res.about)//передаем данные профиля пользователя. name и about это поля,  которые выводятся в ответе на запрос апи,  и соответствуют name и bio
-    userId = res._id // получаем в результате вызова getProfile и он не связан с токеном не равен ему
+    //console.log('ответ профайл', res)
+    userInfo.setUserInfo(res.name, res.about)
+    userId = res._id
   });
 
+
+//------ меняем аватар --------
+// ==ПР9 меняем аватарку
+const avatarPopup = new PopupWithForm('.popup_type_profile-avatar', changeProfileAvatarPopup)
+
+function changeProfileAvatarPopup(avatar) {
+  avatarPopup.renderLoading(true)
+  api.editProfileAvatar(avatar[profileAvatar.name])
+  .then(res => {
+    console.log('ответ аватар', res)
+    userInfo.setUserAvatar(avatar['profile-avatar-link'])
+  })
+    .catch(err => console.log(err))
+    .finally(() => avatarPopup.renderLoading(false));
+}
+
+avatarPopup.setEventListeners()
+
+
+//------ меняем данные профиля --------
+
+const editProfilePopup = new PopupWithForm('.popup_type_profile', changeProfilePopup); //changProfilePopup = handleFormSubmit
+  
+function changeProfilePopup (item) { 
+  const {name, bio} = item; 
+  editProfilePopup.renderLoading(true)
+  api.editProfile(name, bio)
+    .then(res => {
+      //console.log('ответ', res)
+      userInfo.setUserInfo(res.name, res.about)
+    })
+    .catch(err => console.log(err))
+    .finally(() => editProfilePopup.renderLoading(false));
+};
+
+editProfilePopup.setEventListeners() // делаем подписки на закрытие попапа профиля
+
+
+// ==ПР9 зовем метод из класса АПИ, достаем данные карточек
 api.getInitialCards()
   .then(cardList => {
     console.log('ответ карточка', cardList)
@@ -47,29 +101,23 @@ api.getInitialCards()
     cardSection.addItem(cardElement)
   })
 })
+
+
+//------ отрисовка массива карточки  --------
+// ==ПР8 передали в Section, что отрисовать (initialCards) и чем отрисовать (renderer)
+const cardSection = new Section ({
+  items: [], // ==ПР9 нам не нужно отрисовывать initialCards, поэтому пусто 
+    renderer: (item) => {
+    cardSection.addItem(renderCard(item));
+    },
+  }, 
+  '.places');
   
+cardSection.renderItems() 
 
 
-// ==ПР7 создаем валидаторы форм
-const cardPopupFormValidator = new FormValidator(config, cardPopupForm); // ищем внутри модалки добавления карточек cardPopupForm
-const configprofileEditFormValidator = new FormValidator(config, configprofileEditForm); // ищем форму редактирования профиля внутри модалки configprofileEditForm
-const configprofileAvatarFormValidator = new FormValidator(config, configprofileAvatarForm); // ==ПР9 ищем форму редактирования аватарки внутри модалки
-// вызываем функцию для отображения модалок
-cardPopupFormValidator.enableValidation();
-configprofileEditFormValidator.enableValidation();
-configprofileAvatarFormValidator.enableValidation();
+//------ создаем новую карточку и отслеживаем реакции --------
 
-
-// ==ПР8 показываем попап с картинкой
-const imagePopup = new PopupWithImage('.popup_type_photo');
-
-imagePopup.setEventListeners() //делаем подписку на закрытие карточки картинки 
-
-const handleImageClick = (name,link) => { 
-  imagePopup.open(name,link);
-};
-
-// ==ПР7 создаем новую карточку 
 function renderCard(item) {
   const newCard = new Card(
     item,
@@ -92,15 +140,15 @@ function renderCard(item) {
       console.log('like');
       if (newCard.isLiked()){ //если карточка с лайком ==> удали лайк
         api.deleteLike(cardId)
-        .then(res => { // 1. получаю ответ
+        .then(res => { 
           console.log('удаляю лайк', res);
-          newCard.setLikes(res.likes) //2. зову setLikes чтобы обновить счетчик //3. передается кол-во новых лайков //4. новые лайки принимаются в setLikes (newLikes)
+          newCard.setLikes(res.likes) 
         })
       } else { // если лайка нет ==> поставь лайк
           api.addLike(cardId)
-            .then(res => { // 1. получаю ответ
+            .then(res => { 
               console.log('ставлю лайк', res);
-              newCard.setLikes(res.likes) //2. зову setLikes чтобы обновить счетчик //3. передается кол-во новых лайков //4. новые лайки принимаются в setLikes (newLikes)
+              newCard.setLikes(res.likes)
             })
         } 
     }
@@ -110,17 +158,6 @@ function renderCard(item) {
 };
 
 
-// ==ПР8 отрисовка массива карточки, передали в Section, что отрисовать (initialCards) и чем отрисовать (renderer)
-const cardSection = new Section ({
-  items: [], // ==ПР9 нам не нужно отрисовывать initialCards,  поэтому параметр оставляем пустым, секцию создаем но ничего в ней не рендерим
-    renderer: (item) => {
-    cardSection.addItem(renderCard(item));
-    },
-  }, 
-  '.places');
-  
-cardSection.renderItems() // реализуем карточки
-
 // ==ПР8 заполняем, сохраняем и вставляем новую карточку
 const addCardPopup = new PopupWithForm('.popup_type_place', fillPlacePopup); //fillPlacePopup = handleFormSubmit
 
@@ -129,7 +166,7 @@ function fillPlacePopup(item) { //заполняем карточку с мес�
   api.addNewCard(
     item[placeName.name], 
     item[placeLink.name]
-  )// ==ПР9 вклиниваемся в функцию вставки новой карточки и отправляем запрос на размещение на сервер
+  )
     .then(res =>{
       //console.log("res", res)
       const cardElement = renderCard({
@@ -146,67 +183,28 @@ function fillPlacePopup(item) { //заполняем карточку с мес�
   .finally(() => addCardPopup.renderLoading(false));
 };
 
-addCardPopup.setEventListeners() // делаем подписки на закрытие попапа карточки места
+addCardPopup.setEventListeners() 
 
 
-// ==ПР8 записываем новые значения полей профиля
-const userInfo = new UserInfo ({profileNameSelector: '.profile__name', profileBioSelector: '.profile__bio', profileAvatarSelector: '.profile__avatar' })
-const editProfilePopup = new PopupWithForm('.popup_type_profile', changeProfilePopup); //changProfilePopup = handleFormSubmit
-  
-function changeProfilePopup (item) { //changProfilePopup = handleFormSubmit, зовем ее с данными инпутов, которые попадают в текщую функцию в виде item
-  const {name, bio} = item; 
-  editProfilePopup.renderLoading(true)
-  api.editProfile(name, bio)// ==ПР9 вклиниваемся в функцию подстановки данных профиля и отправим запрос на редактирование на сервер //отправляем данные полей на сервер с помощью fetch
-    .then(res => { // сначала мы ждем ответ от сервира,  что все ок,  а после выставляем данные на страничку
-      //console.log('ответ', res)
-      userInfo.setUserInfo(res.name, res.about)
-    })
-    .catch(err => console.log(err))
-    .finally(() => editProfilePopup.renderLoading(false));
+//------ показываем попап с картинкой --------
+
+const imagePopup = new PopupWithImage('.popup_type_photo');
+
+const handleImageClick = (name,link) => { 
+  imagePopup.open(name,link);
 };
 
-editProfilePopup.setEventListeners() // делаем подписки на закрытие попапа профиля
+imagePopup.setEventListeners() 
 
 
-// ==ПР9 уточняем удаление карточки
-const confirmPopup = new PopupWithForm('.popup_type_delete-card') //, () => { // функцию удаления карточки переносим в класс работы с формами PopupWithForm
-  //   api.deleteCard(id) // id нам нужно передать внутрь карточки newCard
-  //     .then(res => {
-  //       console.log('res', res)
-  //     })
-  //   console.log('delete')
-  // });
+//------ уточняем удаление карточки --------
+
+const confirmPopup = new PopupWithForm('.popup_type_delete-card')
 
 confirmPopup.setEventListeners() // делаем подписку для закрытия попапа подтверждения
 
 
-
-// ==ПР9 меняем аватарку
-const avatarPopup = new PopupWithForm('.popup_type_profile-avatar', changeProfileAvatarPopup)
-
-function changeProfileAvatarPopup(item) {
-  avatarPopup.renderLoading(true)
-  api.editProfileAvatar(item[profileAvatar.name])
-  .then(res => {
-    console.log('ответ аватар', res)
-    userInfo.setUserAvatar(item['profile-avatar-link'])
-  })
-    .catch(err => console.log(err))
-    .finally(() => avatarPopup.renderLoading(false));
-}
-
-avatarPopup.setEventListeners()
-
-// function changeProfileAvatarPopup(item) {
-//   api.editProfileAvatar(item) // работаем с профилем
-//   .then(res => {
-//     console.log('ответ аватар', res)
-//     userInfo.setUserAvatar(item['profile-avatar-link'])
-//   });
-// }
-
-
-
+//------ слушатели --------
 // запускаем слушателя функции подстановки заполнения профиля
 profileInfoButton.addEventListener('click', function () {
   configprofileEditFormValidator.resetErrors();
