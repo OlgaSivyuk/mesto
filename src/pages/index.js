@@ -39,17 +39,6 @@ const userInfo = new UserInfo ({profileNameSelector: '.profile__name', profileBi
 
 let userId
 
-// ==ПР9 зовем метод из класса АПИ, достаем данные профиля // 1 итерация переношу данные в Promiss All
-// api.getProfile() 
-//   .then(res => {
-//     //console.log('ответ профайл', res)
-//     userInfo.setUserInfo(res.name, res.about);
-//     userInfo.setUserAvatar(res.avatar);
-//     userId = res._id
-//   })
-//   .catch(err => console.log(err))
-
-
 //------ меняем аватар --------
 // ==ПР9 меняем аватарку
 const avatarPopup = new PopupWithForm('.popup_type_profile-avatar', changeProfileAvatarPopup)
@@ -58,9 +47,8 @@ function changeProfileAvatarPopup(avatar) {
   avatarPopup.renderLoading(true)
   api.editProfileAvatar(avatar[profileAvatar.name])
   .then(() => {
-    //console.log('ответ аватар', res)
     userInfo.setUserAvatar(avatar['profile-avatar-link'])
-    avatarPopup.close() //1 итерация закрываем модалку только в случае успешного ответа сервера
+    avatarPopup.close() 
   })
     .catch(err => console.log(err))
     .finally(() => avatarPopup.renderLoading(false));
@@ -78,9 +66,8 @@ function changeProfilePopup (item) {
   editProfilePopup.renderLoading(true)
   api.editProfile(name, bio)
     .then(res => {
-      //console.log('ответ', res)
       userInfo.setUserInfo(res.name, res.about)
-      editProfilePopup.close() //1 итерация закрываем модалку только в случае успешного ответа сервера
+      editProfilePopup.close()
     })
     .catch(err => console.log(err))
     .finally(() => editProfilePopup.renderLoading(false));
@@ -89,38 +76,16 @@ function changeProfilePopup (item) {
 editProfilePopup.setEventListeners() // делаем подписки на закрытие попапа профиля
 
 
-//------ отрисовка массива карточки  --------
+//------ создание массива карточки  --------
 // ==ПР8 передали в Section, что отрисовать (initialCards) и чем отрисовать (renderer)
 const cardSection = new Section ({
-  //items: [], // ==ПР9 нам не нужно отрисовывать initialCards, поэтому пусто // 1 итерация
   renderer: (item) => {
   cardSection.addItem(renderCard(item));
   },
 }, 
 '.places');
 
-//cardSection.renderItems() // 1 итерация
-
-
-// ==ПР9 зовем метод из класса АПИ, достаем данные карточек
-// api.getUsersCards()
-//   .then(cardList => {
-//     //console.log('ответ карточка', cardList) // 1 итерация
-//     // cardList.forEach(item => {
-//     //   const cardElement = renderCard({
-//     //     name: item.name, 
-//     //     link: item.link,
-//     //     likes: item.likes,
-//     //     cardId: item._id,
-//     //     userId: userId,
-//     //     ownerId: item.owner._id,
-//     //   });
-//     cardSection.renderItems(cardList); // 1 итерация
-//     cardSection.addItem(cardElement)
-//     })
-//   //})
-//   .catch(err => console.log(err)) 
-
+//------ отрисовка данных профиля и массива карточек  -------
 
 Promise.all([api.getProfile(), api.getUsersCards()])
 .then(([userData, cardList]) => {
@@ -128,8 +93,7 @@ Promise.all([api.getProfile(), api.getUsersCards()])
   userInfo.setUserAvatar(userData.avatar);
   userId = userData._id
   
-  const usersCard = cardList.map(item => ({ // почитать почему не сработал forEach
-    //...item, //можно использовать,  чтобы не перечислять все item
+  const usersCard = cardList.map(item => ({ 
     name: item.name, 
     link: item.link,
     likes: item.likes,
@@ -150,33 +114,26 @@ function renderCard(item) {
     '.template', 
     handleImageClick,
     (cardId) => { //  handleDeleteClick
-      //console.log('clicked button')
-      //console.log('', cardId)
       confirmPopup.open();
       confirmPopup.changeSubmitHandler(() => {
-        //console.log(cardId);
         api.deleteCard(cardId) // id нам нужно передать внутрь карточки newCard
           .then(() => {
-          //console.log('res', res);
           newCard.deleteCard();
-          confirmPopup.close() //1 итерация закрываем модалку только в случае успешного ответа сервера
+          confirmPopup.close()
           })
           .catch(err => console.log(err))
       })
     },
     (cardId) => { //handleLikeCklick
-      //console.log('like');
       if (newCard.isLiked()){ //если карточка с лайком ==> удали лайк
         api.deleteLike(cardId)
         .then(res => { 
-          //console.log('удаляю лайк', res);
           newCard.setLikes(res.likes) 
         })
         .catch(err => console.log(err))
       } else { // если лайка нет ==> поставь лайк
           api.addLike(cardId)
             .then(res => { 
-              //console.log('ставлю лайк', res);
               newCard.setLikes(res.likes)
             })
             .catch(err => console.log(err))
@@ -199,7 +156,6 @@ function fillPlacePopup(item) { //заполняем карточку с мес�
     item[placeLink.name]
   )
     .then(res =>{
-      //console.log("res", res)
       const cardElement = renderCard({
         name: res.name, 
         link: res.link,
@@ -209,7 +165,7 @@ function fillPlacePopup(item) { //заполняем карточку с мес�
         ownerId: res.owner._id,
       });
     cardSection.addItem(cardElement); 
-    addCardPopup.close() //1 итерация закрываем модалку только в случае успешного ответа сервера 
+    addCardPopup.close()
    })
   .catch(err => console.log(err))
   .finally(() => addCardPopup.renderLoading(false));

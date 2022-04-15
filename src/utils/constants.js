@@ -1,38 +1,38 @@
-// Отображаем карточки из готового массива
-const Piter = new URL ('../images/piter.jpeg', import.meta.url);
-//import Piter from '../images/piter.jpeg';
-const Sochi = new URL ('../images/arkhyz.jpg', import.meta.url);
-const Kolsky = new URL ('../images/kolsky.jpg', import.meta.url);
-const Kamchatka = new URL ('../images/kamchatka.jpg', import.meta.url);
-const Altay = new URL ('../images/altay.jpg', import.meta.url);
-const Cherkesiya = new URL ('../images/cherkesiya.jpg', import.meta.url);
+// // Отображаем карточки из готового массива
+// const Piter = new URL ('../images/piter.jpeg', import.meta.url);
+// //import Piter from '../images/piter.jpeg';
+// const Sochi = new URL ('../images/arkhyz.jpg', import.meta.url);
+// const Kolsky = new URL ('../images/kolsky.jpg', import.meta.url);
+// const Kamchatka = new URL ('../images/kamchatka.jpg', import.meta.url);
+// const Altay = new URL ('../images/altay.jpg', import.meta.url);
+// const Cherkesiya = new URL ('../images/cherkesiya.jpg', import.meta.url);
 
-export const initialCards = [
-    {
-      name: 'Питер',
-      link: Piter
-    },
-    {
-      name: 'Сочи',
-      link: Sochi
-    },
-    {
-      name: 'Кольский',
-      link: Kolsky
-    },
-    {
-      name: 'Камчатка',
-      link: Kamchatka
-    },
-    {
-      name: 'Алтай',
-      link: Altay
-    },
-    {
-      name: 'Карачаево-Черкесия',
-      link: Cherkesiya
-    }
-  ];
+// export const initialCards = [
+//     {
+//       name: 'Питер',
+//       link: Piter
+//     },
+//     {
+//       name: 'Сочи',
+//       link: Sochi
+//     },
+//     {
+//       name: 'Кольский',
+//       link: Kolsky
+//     },
+//     {
+//       name: 'Камчатка',
+//       link: Kamchatka
+//     },
+//     {
+//       name: 'Алтай',
+//       link: Altay
+//     },
+//     {
+//       name: 'Карачаево-Черкесия',
+//       link: Cherkesiya
+//     }
+//   ];
 
 
 export const config = {
