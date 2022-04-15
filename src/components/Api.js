@@ -11,11 +11,6 @@ class Api {
    })
     .then(res => res.ok ? res.json(): 
       Promise.reject(res.status))
-      //console.log('res', res)
-    .catch(console.log)
-    // .then((res) => {
-    //   console.log('res', res)    
-    // })
   }
   
   getInitialCards() { // метод для подстановки данных карточек // по умолчанию Get
@@ -24,7 +19,6 @@ class Api {
     })
     .then(res => res.ok ? res.json():  //2. проверяем,  что сервер ответил успешно res.ok // 3. если успешно,  делаем из ответа объект res.json() 
       Promise.reject(res.status)) //4. если ответ не успешный,  то проваливаемся в ошибку  выводим catch
-    .catch(console.log)
   }
   
   editProfile(name, about) { // метод для внесения изменений в профиль // метод patch
@@ -38,7 +32,6 @@ class Api {
     })
     .then(res => res.ok ? res.json():
       Promise.reject(res.status))
-    .catch(console.log)
   }
 
   addNewCard(name, link) { // метод добавления новой карточки // метод post
@@ -52,7 +45,6 @@ class Api {
     })
     .then(res => res.ok ? res.json():
       Promise.reject(res.status))
-    .catch(console.log)
   }
 
   deleteCard(id) { // метод удаления // метод delete
@@ -62,7 +54,6 @@ class Api {
     })
     .then(res => res.ok ? res.json():
       Promise.reject(res.status))
-    .catch(console.log)
   }
 
   deleteLike(id) { // метод удаления // метод delete
@@ -72,7 +63,6 @@ class Api {
     })
     .then(res => res.ok ? res.json():
       Promise.reject(res.status))
-    .catch(console.log)
   }
 
   addLike(id) { // метод добавления // метод put
@@ -82,7 +72,6 @@ class Api {
     })
     .then(res => res.ok ? res.json():
       Promise.reject(res.status))
-    .catch(console.log)
   }
 
   editProfileAvatar(avatar) { // метод добавления // метод put
@@ -95,7 +84,6 @@ class Api {
     })
     .then(res => res.ok ? res.json():
       Promise.reject(res.status))
-    .catch(console.log)
   }
 
   
@@ -105,7 +93,6 @@ class Api {
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-39', // здесь указываем свою когорту
     headers: {
       authorization: '88e16114-a16c-404a-8007-3bb931ff1f77', // здесь указываем свой токен
-      //authorization: '2e5af95a-25b4-4742-9ead-1326c8073602', // здесь указываем свой токен
       'Content-Type': 'application/json'
     }
   }); 
