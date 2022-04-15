@@ -4,8 +4,8 @@ import {
   profileName,
   profileBio,
   profileAvatar,
-  configprofileEditForm,
-  configprofileAvatarForm,
+  configProfileEditForm,
+  configProfileAvatarForm,
   profilePlaceButton,
   placeName,
   placeLink,
@@ -24,12 +24,12 @@ import '../pages/index.css';
 
 // ==ПР7 создаем валидаторы форм
 const cardPopupFormValidator = new FormValidator(config, cardPopupForm); 
-const configprofileEditFormValidator = new FormValidator(config, configprofileEditForm); 
-const configprofileAvatarFormValidator = new FormValidator(config, configprofileAvatarForm); 
+const configProfileEditFormValidator = new FormValidator(config, configProfileEditForm); 
+const configProfileAvatarFormValidator = new FormValidator(config, configProfileAvatarForm); 
 // вызываем функцию для отображения модалок
 cardPopupFormValidator.enableValidation();
-configprofileEditFormValidator.enableValidation();
-configprofileAvatarFormValidator.enableValidation();
+configProfileEditFormValidator.enableValidation();
+configProfileAvatarFormValidator.enableValidation();
 
 // ==ПР8 записываем новые значения полей профиля
 const userInfo = new UserInfo ({profileNameSelector: '.profile__name', profileBioSelector: '.profile__bio', profileAvatarSelector: '.profile__avatar' })
@@ -39,13 +39,15 @@ const userInfo = new UserInfo ({profileNameSelector: '.profile__name', profileBi
 
 let userId
 
-// ==ПР9 зовем метод из класса АПИ, достаем данные профиля
-api.getProfile() 
-  .then(res => {
-    //console.log('ответ профайл', res)
-    userInfo.setUserInfo(res.name, res.about)
-    userId = res._id
-  });
+// ==ПР9 зовем метод из класса АПИ, достаем данные профиля // 1 итерация переношу данные в Promiss All
+// api.getProfile() 
+//   .then(res => {
+//     //console.log('ответ профайл', res)
+//     userInfo.setUserInfo(res.name, res.about);
+//     userInfo.setUserAvatar(res.avatar);
+//     userId = res._id
+//   })
+//   .catch(err => console.log(err))
 
 
 //------ меняем аватар --------
@@ -55,8 +57,8 @@ const avatarPopup = new PopupWithForm('.popup_type_profile-avatar', changeProfil
 function changeProfileAvatarPopup(avatar) {
   avatarPopup.renderLoading(true)
   api.editProfileAvatar(avatar[profileAvatar.name])
-  .then(res => {
-    console.log('ответ аватар', res)
+  .then(() => {
+    //console.log('ответ аватар', res)
     userInfo.setUserAvatar(avatar['profile-avatar-link'])
   })
     .catch(err => console.log(err))
@@ -85,36 +87,58 @@ function changeProfilePopup (item) {
 editProfilePopup.setEventListeners() // делаем подписки на закрытие попапа профиля
 
 
-// ==ПР9 зовем метод из класса АПИ, достаем данные карточек
-api.getInitialCards()
-  .then(cardList => {
-    console.log('ответ карточка', cardList)
-    cardList.forEach(item => {
-      const cardElement = renderCard({
-        name: item.name, 
-        link: item.link,
-        likes: item.likes,
-        cardId: item._id,
-        userId: userId,
-        ownerId: item.owner._id,
-    });
-    cardSection.addItem(cardElement)
-  })
-})
-
-
 //------ отрисовка массива карточки  --------
 // ==ПР8 передали в Section, что отрисовать (initialCards) и чем отрисовать (renderer)
 const cardSection = new Section ({
-  items: [], // ==ПР9 нам не нужно отрисовывать initialCards, поэтому пусто 
-    renderer: (item) => {
-    cardSection.addItem(renderCard(item));
-    },
-  }, 
-  '.places');
-  
-cardSection.renderItems() 
+  //items: [], // ==ПР9 нам не нужно отрисовывать initialCards, поэтому пусто // 1 итерация
+  renderer: (item) => {
+  cardSection.addItem(renderCard(item));
+  },
+}, 
+'.places');
 
+//cardSection.renderItems() // 1 итерация
+
+
+// ==ПР9 зовем метод из класса АПИ, достаем данные карточек
+// api.getUsersCards()
+//   .then(cardList => {
+//     //console.log('ответ карточка', cardList) // 1 итерация
+//     // cardList.forEach(item => {
+//     //   const cardElement = renderCard({
+//     //     name: item.name, 
+//     //     link: item.link,
+//     //     likes: item.likes,
+//     //     cardId: item._id,
+//     //     userId: userId,
+//     //     ownerId: item.owner._id,
+//     //   });
+//     cardSection.renderItems(cardList); // 1 итерация
+//     cardSection.addItem(cardElement)
+//     })
+//   //})
+//   .catch(err => console.log(err)) 
+
+
+Promise.all([api.getProfile(), api.getUsersCards()])
+.then(([userData, cardList]) => {
+  userInfo.setUserInfo(userData.name, userData.about);
+  userInfo.setUserAvatar(userData.avatar);
+  userId = userData._id
+  
+  const usersCard = cardList.map(item => ({ // почитать почему не сработал forEach
+    //...item, //можно использовать,  чтобы не перечислять все item
+    name: item.name, 
+    link: item.link,
+    likes: item.likes,
+    cardId: item._id,
+    userId: userId,
+    ownerId: item.owner._id,
+
+  }))
+   cardSection.renderItems(usersCard.reverse())
+})
+.catch(err => console.log(err))
 
 //------ создаем новую карточку и отслеживаем реакции --------
 
@@ -124,38 +148,42 @@ function renderCard(item) {
     '.template', 
     handleImageClick,
     (cardId) => { //  handleDeleteClick
-      console.log('clicked button')
-      console.log('', cardId)
+      //console.log('clicked button')
+      //console.log('', cardId)
       confirmPopup.open();
       confirmPopup.changeSubmitHandler(() => {
-        console.log(cardId);
+        //console.log(cardId);
         api.deleteCard(cardId) // id нам нужно передать внутрь карточки newCard
-          .then(res => {
-          console.log('res', res);
+          .then(() => {
+          //console.log('res', res);
           newCard.deleteCard();
           })
+          .catch(err => console.log(err))
       })
     },
     (cardId) => { //handleLikeCklick
-      console.log('like');
+      //console.log('like');
       if (newCard.isLiked()){ //если карточка с лайком ==> удали лайк
         api.deleteLike(cardId)
         .then(res => { 
-          console.log('удаляю лайк', res);
+          //console.log('удаляю лайк', res);
           newCard.setLikes(res.likes) 
         })
+        .catch(err => console.log(err))
       } else { // если лайка нет ==> поставь лайк
           api.addLike(cardId)
             .then(res => { 
-              console.log('ставлю лайк', res);
+              //console.log('ставлю лайк', res);
               newCard.setLikes(res.likes)
             })
+            .catch(err => console.log(err))
         } 
     }
     );
   const cardElement = newCard.cardCreate()
   return cardElement; // ПР8 возврящаю карточку
 };
+
 
 
 // ==ПР8 заполняем, сохраняем и вставляем новую карточку
@@ -207,8 +235,8 @@ confirmPopup.setEventListeners() // делаем подписку для зак�
 //------ слушатели --------
 // запускаем слушателя функции подстановки заполнения профиля
 profileInfoButton.addEventListener('click', function () {
-  configprofileEditFormValidator.resetErrors();
-  configprofileEditFormValidator.checkButtonValidity();
+  configProfileEditFormValidator.resetErrors();
+  configProfileEditFormValidator.checkButtonValidity();
   const {name, bio} = userInfo.getUserInfo()
   profileName.value = name;
   profileBio.value = bio;
@@ -224,7 +252,7 @@ profilePlaceButton.addEventListener('click', () => {
 
 //запускаем слушателя функции обновления аватара
 profileAvatarButton.addEventListener('click', () => {
-  configprofileAvatarFormValidator.resetErrors(); 
-  configprofileAvatarFormValidator.checkButtonValidity();
+  configProfileAvatarFormValidator.resetErrors(); 
+  configProfileAvatarFormValidator.checkButtonValidity();
   avatarPopup.open();  
 })

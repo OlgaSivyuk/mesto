@@ -55,10 +55,10 @@ export const profileAvatar = document.getElementById('profile-avatar-link');
 //export const profileAvatar = document.getElementById('profile-avatar')
 
 // форма редактирования профиля (используется в ПР7 formValidation)
-export const configprofileEditForm = document.querySelector('.popup__form_profile');
+export const configProfileEditForm = document.querySelector('.popup__form_profile');
 
 // форма редактирования аватарки профиля ПР9
-export const configprofileAvatarForm = document.querySelector('.popup__form_profile-avatar')
+export const configProfileAvatarForm = document.querySelector('.popup__form_profile-avatar')
 
 //КАРТОЧКА МЕСТА объявляем переменные
 export const profilePlaceButton = document.querySelector('.profile__add-place');

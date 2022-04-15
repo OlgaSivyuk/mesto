@@ -13,7 +13,7 @@ class Api {
       Promise.reject(res.status))
   }
   
-  getInitialCards() { // метод для подстановки данных карточек // по умолчанию Get
+  getUsersCards() { // метод для подстановки данных карточек // по умолчанию Get
     return fetch(`${this._baseUrl}/cards`, { // 1. отправляем headers
         headers: this._headers
     })
