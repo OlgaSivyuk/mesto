@@ -3,7 +3,7 @@
 .header{border-bottom:1px solid rgba(84,84,84,.7);margin:45px 0 0;padding:0 0 37px}@media screen and (max-width:539px){.header{margin:28px 0 0;padding:0 0 31.6px}}
 .header__logo{height:33px;width:142px}@media screen and (max-width:880px){.header__logo{margin:0 0 0 27px}}@media screen and (max-width:539px){.header__logo{height:24.4px;width:103.74px}}
 .profile{display:flex;margin:40px 0 50px}@media screen and (max-width:880px){.profile{margin:40px 27px 50px}}@media screen and (max-width:767px){.profile{align-items:center;flex-direction:column;margin:42px 0 36px}}
-.profile__avatar{border-radius:50%;box-sizing:border-box;height:120px;position:relative;width:120px}
+.profile__avatar{border-radius:50%;box-sizing:border-box;height:120px;-o-object-fit:cover;object-fit:cover;position:relative;width:120px}
 .profile__avatar-img{grid-area:profile__avatar;margin:0;padding:0;position:relative}@media (max-width:740px){.profile__avatar-img{margin:0 auto}}
 .profile__avatar-button{background-color:rgba(0,0,0,.8);background-image:url(a086f758840ae814ecde.svg);background-position:50%;background-repeat:no-repeat;background-size:26px;border:0;border-radius:50%;cursor:pointer;height:120px;left:50%;margin:0;opacity:0;padding:0;position:absolute;top:48.5%;transform:translate(-50%,-50%);transition:all .1s linear;width:120px}.profile__avatar-button:hover{opacity:1}
 .profile__info{padding-left:30px;padding-top:21px}@media screen and (max-width:767px){.profile__info{padding-left:19px;text-align:center}}
