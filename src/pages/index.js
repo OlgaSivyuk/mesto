@@ -60,6 +60,7 @@ function changeProfileAvatarPopup(avatar) {
   .then(() => {
     //console.log('ответ аватар', res)
     userInfo.setUserAvatar(avatar['profile-avatar-link'])
+    avatarPopup.close() //1 итерация закрываем модалку только в случае успешного ответа сервера
   })
     .catch(err => console.log(err))
     .finally(() => avatarPopup.renderLoading(false));
@@ -79,6 +80,7 @@ function changeProfilePopup (item) {
     .then(res => {
       //console.log('ответ', res)
       userInfo.setUserInfo(res.name, res.about)
+      editProfilePopup.close() //1 итерация закрываем модалку только в случае успешного ответа сервера
     })
     .catch(err => console.log(err))
     .finally(() => editProfilePopup.renderLoading(false));
@@ -157,6 +159,7 @@ function renderCard(item) {
           .then(() => {
           //console.log('res', res);
           newCard.deleteCard();
+          confirmPopup.close() //1 итерация закрываем модалку только в случае успешного ответа сервера
           })
           .catch(err => console.log(err))
       })
@@ -205,7 +208,8 @@ function fillPlacePopup(item) { //заполняем карточку с мес�
         userId: userId,
         ownerId: res.owner._id,
       });
-    cardSection.addItem(cardElement);  
+    cardSection.addItem(cardElement); 
+    addCardPopup.close() //1 итерация закрываем модалку только в случае успешного ответа сервера 
    })
   .catch(err => console.log(err))
   .finally(() => addCardPopup.renderLoading(false));
